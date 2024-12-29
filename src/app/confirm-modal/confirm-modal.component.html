@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Confirm Submission</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label>Are you sure you want to submit this information?</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>Name:</ion-label>
+    <ion-text>{{ userData.firstName }} {{ userData.lastName }}</ion-text>
+  </ion-item>
+  <ion-item>
+    <ion-label>Location:</ion-label>
+    <ion-text>{{ userData.location?.lat }}, {{ userData.location?.lng }}</ion-text>
+  </ion-item>
+  <ion-item>
+    <ion-label>Education:</ion-label>
+    <ion-text>{{ userData.education }}</ion-text>
+  </ion-item>
+  <ion-item>
+    <ion-label>Profile Picture:</ion-label>
+    <img [src]="userData.profilePic" alt="Profile Picture" class="profile-picture" />
+  </ion-item>
+
+  <ion-footer>
+    <ion-button expand="full" (click)="dismissModal()">Cancel</ion-button>
+    <ion-button expand="full" color="success" (click)="confirm()">Confirm</ion-button>
+  </ion-footer>
+</ion-content>

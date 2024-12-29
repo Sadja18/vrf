@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>User Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-avatar slot="start">
+      <img [src]="user?.profilePic" alt="Profile Picture" />
+    </ion-avatar>
+    <ion-label>
+      <h2>{{ user?.firstName }} {{ user?.lastName }}</h2>
+      <p>Mobile: {{ user?.mobile }}</p>
+      <p>Gender: {{ user?.gender }}</p>
+      <p>Education: {{ user?.education }}</p>
+      <p>Location: {{ user?.location?.lat }}, {{ user?.location?.lng }}</p>  <!-- Display lat, lng -->
+      <p>Date of Birth: {{ user?.dateOfBirth }}</p>  <!-- Display DoB -->
+    </ion-label>
+  </ion-item>
+</ion-content>

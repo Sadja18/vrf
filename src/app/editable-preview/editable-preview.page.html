@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Editable Preview</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let field of fields">
+      <ion-label class="field-name">
+        {{ field.label }}
+      </ion-label>
+      <div class="field-value">
+        <!-- Regular fields -->
+        <ng-container *ngIf="field.key !== 'location'  && field.key !== 'profilePic'; else specialField">
+          <ion-text>{{ userData[field.key] }}</ion-text>
+        </ng-container>
+
+         <!-- Special fields: location and profilePic -->
+         <ng-template #specialField>
+          <!-- Profile Picture -->
+          <div *ngIf="field.key === 'profilePic'">
+            <img [src]="userData.profilePic" alt="Profile Picture" class="profile-picture" />
+          </div>
+          <!-- Location -->
+          <div *ngIf="field.key === 'location'">
+            <ion-text>Lat: {{ userData.location?.lat }}</ion-text>,
+            <ion-text>Lng: {{ userData.location?.lng }}</ion-text>
+          </div>
+        </ng-template>
+      </div>
+      <ion-button fill="clear" slot="end" (click)="editField(field.key)">
+        <ion-icon slot="icon-only" name="create"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <!-- Submit Button -->
+ 
+<ion-button expand="full" (click)="openConfirmModal()">Submit</ion-button>
+
+</ion-content>
