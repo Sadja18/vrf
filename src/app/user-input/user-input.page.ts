@@ -9,7 +9,7 @@ import { NavController } from '@ionic/angular';
   selector: 'app-user-input',
   templateUrl: './user-input.page.html',
   styleUrls: ['./user-input.page.scss'],
-  standalone:false
+  standalone: false
 })
 export class UserInputPage implements OnInit {
   userForm: FormGroup;  // FormGroup to manage user input fields
@@ -19,7 +19,7 @@ export class UserInputPage implements OnInit {
   map: L.Map | undefined;
 
 
-  constructor(private formBuilder: FormBuilder, private navCtrl: NavController) { 
+  constructor(private formBuilder: FormBuilder, private navCtrl: NavController) {
     // Initialize the form with validation rules
     this.userForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.maxLength(50)]],
@@ -28,7 +28,7 @@ export class UserInputPage implements OnInit {
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],  // Mobile number validation (10 digits)
       gender: ['', Validators.required],
       education: ['', Validators.required],
-      location: [{lat:0, lng:0}, Validators.required],  // Location will be updated later
+      location: [{ lat: 0, lng: 0 }, Validators.required],  // Location will be updated later
       dateOfBirth: ['2024-12-20', Validators.required],  // Add dateOfBirth field with required validation
     });
   }
@@ -49,45 +49,45 @@ export class UserInputPage implements OnInit {
   }
 
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     this.initializeMap();
-    
+
   }
 
   // Method to get current location using Capacitor Geolocation API
-    // Function to get the current location
-    async getCurrentLocation() {
-      try {
-        const position = await Geolocation.getCurrentPosition();
-        const { latitude, longitude } = position.coords;
-  
-        // Update the location in the form
-        this.userForm.controls['location'].setValue(`${latitude}, ${longitude}`);
+  // Function to get the current location
+  async getCurrentLocation() {
+    try {
+      const position = await Geolocation.getCurrentPosition();
+      const { latitude, longitude } = position.coords;
 
-        this.currentLocation = {lat:latitude, lng:longitude};
-  
-        // Set map view to current location and add a marker
-        if (this.map) {
-          // Center map to the user's location
-          this.map.setView([latitude, longitude], 13);
-  
-          // Remove any existing markers before adding a new one
-          this.map.eachLayer((layer) => {
-            if (layer instanceof L.Marker) {
-              this.map?.removeLayer(layer);
-            }
-          });
-  
-          // Add a marker at the current location
-          L.marker([latitude, longitude]).addTo(this.map)
-            .bindPopup('You are here!')
-            .openPopup();
-        }
-  
-      } catch (error) {
-        console.error('Error getting location:', error);
+      // Update the location in the form
+      this.userForm.controls['location'].setValue(`${latitude}, ${longitude}`);
+
+      this.currentLocation = { lat: latitude, lng: longitude };
+
+      // Set map view to current location and add a marker
+      if (this.map) {
+        // Center map to the user's location
+        this.map.setView([latitude, longitude], 13);
+
+        // Remove any existing markers before adding a new one
+        this.map.eachLayer((layer) => {
+          if (layer instanceof L.Marker) {
+            this.map?.removeLayer(layer);
+          }
+        });
+
+        // Add a marker at the current location
+        L.marker([latitude, longitude]).addTo(this.map)
+          .bindPopup('You are here!')
+          .openPopup();
       }
+
+    } catch (error) {
+      console.error('Error getting location:', error);
     }
+  }
 
   // Method to capture profile picture using the device camera
   async captureProfilePic() {
@@ -118,7 +118,7 @@ export class UserInputPage implements OnInit {
       console.log(this.currentLocation);
       // Prepare the data for submission (form data + profile picture + location)
       const userData = {
-        ...this.userForm.value, 
+        ...this.userForm.value,
         profilePic: this.profilePicBase64,
         location: this.currentLocation,
       };
@@ -136,12 +136,20 @@ export class UserInputPage implements OnInit {
     }
   }
 
-  formattedCoords(){
+  formattedCoords() {
 
     const value = `Lat: ${this.currentLocation?.lat}
 Long: ${this.currentLocation?.lng}`
 
     return value;
+  }
+
+  // Method to reset the form
+  resetForm() {
+    this.userForm.reset();  // Reset all fields in the form
+    this.profilePicBase64 = undefined;  // Clear the profile picture
+    this.currentLocation = undefined;  // Clear the location
+    this.initializeMap();  // Reinitialize the map
   }
 
 }

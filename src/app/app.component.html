@@ -12,23 +12,21 @@
   <ion-menu side="start" content-id="main-content">
     <ion-header>
       <ion-toolbar>
-        <ion-title>Menu</ion-title>
+        <ion-title>Navigation</ion-title> <!-- "Navigation" is still clear and concise -->
       </ion-toolbar>
     </ion-header>
     <ion-content>
       <ion-list>
-        <ion-item routerLink="/user-input" routerDirection="root">
-          <ion-label>User Input</ion-label>
-        </ion-item>
-        <ion-item routerLink="/editable-preview" routerDirection="root">
-          <ion-label>Preview</ion-label>
-        </ion-item>
         <ion-item routerLink="/screen3" routerDirection="root">
-          <ion-label>Existing</ion-label>
+          <ion-label>View Records</ion-label> <!-- Shortened label -->
+        </ion-item>
+        <ion-item routerLink="/user-input" routerDirection="root">
+          <ion-label>Submit Details</ion-label> <!-- Shortened label -->
         </ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
+
 
   <!-- Main content area, where pages will be rendered -->
   <ion-router-outlet id="main-content"></ion-router-outlet>
