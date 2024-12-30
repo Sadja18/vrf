@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'user-input',
+    redirectTo: 'input',
     pathMatch: 'full'
   },
   {
@@ -22,6 +22,18 @@ const routes: Routes = [
   {
     path: 'editable-preview',
     loadChildren: () => import('./editable-preview/editable-preview.module').then( m => m.EditablePreviewPageModule)
+  },
+  {
+    path: 'input',
+    loadChildren: () => import('./v2/input/input.module').then( m => m.InputPageModule)
+  },
+  {
+    path: 'preview',
+    loadChildren: () => import('./v2/preview/preview.module').then( m => m.PreviewPageModule)
+  },
+  {
+    path: 'list',
+    loadChildren: () => import('./v2/list/list.module').then( m => m.ListPageModule)
   },
 ];
 

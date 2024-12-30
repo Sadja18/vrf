@@ -1,0 +1,98 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>input</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+
+  <div class="parent">
+    <form (ngSubmit)="onSubmit()">
+      <div class="input-form-container">
+
+        <div class="first-name-wrapper">
+
+          <ion-item>
+            <!-- <ion-label position="floating">First Name</ion-label> -->
+            <ion-input [(ngModel)]="user.firstName" label="First Name" labelPlacement="floating" name="firstName" required></ion-input>
+          </ion-item>
+        </div>
+        <!--  -->
+        <div class="last-name-wrapper">
+          <ion-item>
+            <!-- <ion-label position="floating">Last Name</ion-label> -->
+            <ion-input [(ngModel)]="user.lastName" label="Last Name" labelPlacement="floating" name="lastName" required></ion-input>
+          </ion-item>
+        </div>
+        <!--  -->
+        <div class="mobile-wrapper">
+          <ion-item>
+            <!-- <ion-label position="floating">Mobile</ion-label> -->
+            <ion-input [(ngModel)]="user.mobile" name="mobile" label="Mobile" labelPlacement="floating" required></ion-input>
+          </ion-item>
+        </div>
+        <!--  -->
+        <div class="dob-wrapper">
+          <ion-item>
+            <!-- <ion-label for="dateOfBirth">Date of Birth</ion-label> -->
+            <!-- <ion-input type="date" [(ngModel)]="user.dateOfBirth" name="dateOfBirth" label="Date of Birth" labelPlacement="floating" value="{{ user.dateOfBirth | date: 'dd.MM.yyyy' }}"></ion-input> -->
+            <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime" presentation="date" mode="md" [(ngModel)]="user.dateOfBirth" [showDefaultButtons]="true" [formatOptions]="{
+                  date: { day: '2-digit', month: '2-digit', year: 'numeric' }
+                }"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+        </div>
+        <!--  -->
+        <div class="address-wrapper">
+          <ion-item>
+            <!-- <ion-label for="address">Address</ion-label> -->
+            <ion-textarea [(ngModel)]="user.address" name="address" labelPlacement="floating" label="'Address"></ion-textarea>
+          </ion-item>
+        </div>
+        <!--  -->
+        <div class="gender-wrapper">
+          <ion-item>
+            <!-- <ion-label for="gender">Gender</ion-label> -->
+            <ion-input label="Gender" labelPlacement="floating" [(ngModel)]="user.gender" name="gender"></ion-input>
+          </ion-item>
+        </div>
+        <!--  -->
+        <div class="education-wrapper">
+          <ion-item>
+            <!-- <ion-label position="floating">Education</ion-label> -->
+            <ion-input [(ngModel)]="user.education" name="education"></ion-input>
+          </ion-item>
+        </div>
+        <!--  -->
+        <div class="profilePic-wrapper">
+          <ion-item>
+            <!-- <ion-label position="floating">Profile Picture (Base64)</ion-label> -->
+            <ion-input [(ngModel)]="user.profilePic" name="profilePic"></ion-input>
+          </ion-item>
+        </div>
+        <!--  -->
+        <div class="location-wrapper">
+          <ion-item>
+            <!-- <ion-label position="floating">Location (Lat, Lng)</ion-label> -->
+            <ion-input [(ngModel)]="user.location.lat" name="lat"></ion-input>
+            <ion-input [(ngModel)]="user.location.lng" name="lng"></ion-input>
+          </ion-item>
+        </div>
+      </div>
+      <!-- <ion-footer> -->
+      <div class="button-footer-wrapper">
+        <ion-button class="reset-btn" color="secondary" shape="round" expand="full" (click)="onReset()">
+          Reset
+        </ion-button>
+        <ion-button class="submit-btn" color="success" shape="round" expand="full" type="submit">
+          Submit
+        </ion-button>
+      </div>
+      <!-- </ion-footer> -->
+    </form>
+  </div>
+</ion-content>

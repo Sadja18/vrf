@@ -1,0 +1,37 @@
+.parent {
+    width: 100%;
+    background-color: aqua;
+    margin: 2px 2px;
+    padding: 20px 12px;
+    text-align: center;
+    align-items: center;
+}
+
+.input-form-container{
+    margin: 2px 2px;
+    // border: 2px solid black;
+}
+
+.input-form-container div {
+    margin: 8px 2px;
+}
+
+.input-form-container div ion-item {
+    border-radius: 1%;
+
+}
+
+.button-footer-wrapper {
+    display: flex;
+    justify-content: space-between;
+    /* This will ensure they are spread out */
+    gap: 10px;
+    /* Optional: Add space between the buttons */
+}
+
+ion-button {
+    flex: 1;
+    /* Ensure both buttons take equal width */
+    width: 42%;
+    /* You can adjust this value to control the button width */
+}

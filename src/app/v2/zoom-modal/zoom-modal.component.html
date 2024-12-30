@@ -1,0 +1,13 @@
+<div class="parent">
+  <div class="header">
+    <div class="toolbar">
+      <span class="title">Profile Picture</span>
+    </div>
+  </div>
+  <div class="map-parent">
+    <img [src]="profilePic" alt="Zoomed Profile" class="zoomed-image" />
+  </div>
+  <div slot="end">
+    <ion-button (click)="dismiss()">Close</ion-button>
+  </div>
+</div>

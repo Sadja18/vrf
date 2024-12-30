@@ -1,0 +1,44 @@
+<!-- <div class="user-card">
+  <p><strong>First Name:</strong> {{ user.firstName }}</p>
+  <p><strong>Last Name:</strong> {{ user.lastName }}</p>
+  <p><strong>Mobile:</strong> {{ user.mobile }}</p>
+  <p><strong>Profile Pic: </strong> {{ typeof user.profilePic }}</p>
+</div> -->
+
+
+<div class="user-card">
+  <ion-row class="user-details">
+    <ion-col size="auto" class="avatar-col">
+      <img 
+      [src]="user.profilePic" 
+      alt="Profile Picture" 
+      class="profile-avatar" 
+      (click)="openProfileZoom()"
+      />
+    </ion-col>
+    <ion-col class="info-col"  (click)="openMap()">
+      <div class="name-row">
+        <ion-row><span>First Name:</span> {{ user.firstName | titlecase }}</ion-row>
+      </div>
+      <div class="name-row">
+        <ion-row><span>Last Name:</span> {{ user.lastName | titlecase }}</ion-row>
+      </div>
+      <div class="mobile-row">
+        <span>Mobile:</span> {{ user.mobile | titlecase }}
+      </div>
+      <div class="education-row">
+        <span>Education:</span> {{ user.education | titlecase }}
+      </div>
+      <div class="address-row">
+        <span>Address:</span> {{ user.address | titlecase }}
+      </div>
+
+      <div class="location-row">
+        <span>Latitude:</span> {{ user.location.lat }}
+      </div>
+      <div class="location-row">
+        <span>Longitude:</span> {{ user.location.lng }}
+      </div>
+    </ion-col>
+  </ion-row>
+</div>

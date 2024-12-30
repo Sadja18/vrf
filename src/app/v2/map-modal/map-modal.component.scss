@@ -1,0 +1,31 @@
+.parent{
+    width: 90%;
+    max-height: 80%;
+    padding: 10px 10px;
+    margin: 5%;
+    background-color: rgb(151, 190, 241);
+
+    align-items: center;
+    text-align: center;
+}
+
+.header{
+    width: 100px;
+    height: 25px;
+    font-size: large;
+    font-weight: bold;
+    // background-color: green;
+}
+
+.map-parent {
+    height: 90%;
+    width: 100%;
+    padding: 2% 5%;
+    // background-color: aquamarine;
+}
+
+#map {
+    height: 400px;
+    width: 300px;
+
+}
