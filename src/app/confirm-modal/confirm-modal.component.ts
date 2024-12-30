@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
+import { User } from '../models/user.interface';
 
 @Component({
   selector: 'app-confirm-modal',
@@ -13,7 +14,7 @@ import { IonicModule, ModalController } from '@ionic/angular';
   ]
 })
 export class ConfirmModalComponent  implements OnInit {
-  @Input() userData: any;  // Data to display in the confirmation modal
+  @Input() userData: User | undefined;  // Data to display in the confirmation modal
 
   constructor(    private modalController: ModalController
   ) { }

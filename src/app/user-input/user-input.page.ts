@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Geolocation } from '@capacitor/geolocation';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import * as L from 'leaflet';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-user-input',
@@ -18,7 +19,7 @@ export class UserInputPage implements OnInit {
   map: L.Map | undefined;
 
 
-  constructor(private formBuilder: FormBuilder) { 
+  constructor(private formBuilder: FormBuilder, private navCtrl: NavController) { 
     // Initialize the form with validation rules
     this.userForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.maxLength(50)]],
@@ -48,7 +49,7 @@ export class UserInputPage implements OnInit {
   }
 
 
-  ngAfterViewInit(){
+  ionViewDidEnter(){
     this.initializeMap();
     
   }
@@ -122,12 +123,25 @@ export class UserInputPage implements OnInit {
         location: this.currentLocation,
       };
 
+
       console.log('User Data to Submit:', userData);
-      // Navigate to Screen 2 (preview) or handle further processing
+      // Navigate to Screen 2 (preview)
+      // Use NavController to navigate and pass data
+      this.navCtrl.navigateForward('/editable-preview', {
+        state: { userData: userData }
+      });
     } else {
       // Handle form validation error
       console.log('Form is invalid');
     }
+  }
+
+  formattedCoords(){
+
+    const value = `Lat: ${this.currentLocation?.lat}
+Long: ${this.currentLocation?.lng}`
+
+    return value;
   }
 
 }

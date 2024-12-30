@@ -1,0 +1,1 @@
+export CAPACITOR_ANDROID_STUDIO_PATH="/home/naman/.local/share/JetBrains/Toolbox/apps/android-studio/bin/studio.sh"

@@ -4,17 +4,22 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="user-records-content">
   <ion-list>
-    <!-- Loop over user records and display each in a table-like format -->
+    <!-- Loop over user records and display each in a card-like format -->
     <ion-item *ngFor="let record of userRecords" (click)="openUserDetails(record)">
-      <ion-avatar slot="start">
-        <img [src]="record.profilePic" alt="Profile Picture" />
-      </ion-avatar>
-      <ion-label>
-        <h2>{{ record.firstName }} {{ record.lastName }}</h2>
-        <p>{{ record.mobile }}</p>
-      </ion-label>
+      <ion-card class="user-record-card">
+        <ion-card-content>
+          <ion-avatar slot="start">
+            <img [src]="getValidProfilePic(record?.profilePic, record?.gender)" alt="Profile Picture" />
+          </ion-avatar>
+          <ion-label class="user-record-label">
+            <h2 class="user-name">{{ record.firstName }} {{ record.lastName }}</h2>
+            <p class="user-mobile"><ion-icon name="call"></ion-icon> {{ record.mobile }}</p>
+            <p class="user-education"><strong>Education:</strong> {{ record.education }}</p>
+          </ion-label>
+        </ion-card-content>
+      </ion-card>
     </ion-item>
   </ion-list>
 </ion-content>

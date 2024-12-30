@@ -1,0 +1,72 @@
+/* Overall Layout Adjustments */
+.confirmation-table {
+    margin: 0 10px;
+}
+
+ion-grid {
+    margin-bottom: 20px;
+}
+
+ion-row {
+    margin-bottom: 10px;
+    vertical-align: middle;
+}
+
+ion-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Profile Picture Styling */
+.profile-picture {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+
+/* Button Container Styling */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+ion-button {
+    width: 48%;
+    /* Reduced button width */
+    font-size: 14px;
+    /* Reduced font size */
+    padding: 8px;
+    border-radius: 4px;
+}
+
+ion-button[color="danger"] {
+    background-color: #f53d3d;
+    /* Red color for Cancel */
+}
+
+ion-button[color="success"] {
+    background-color: #2dd36f;
+    /* Green color for Confirm */
+}
+
+/* Modal Sizing Adjustments */
+ion-content {
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    --padding-start: 0px;
+    --padding-end: 0px;
+}
+
+/* Reduce the overall modal width */
+ion-footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+ion-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

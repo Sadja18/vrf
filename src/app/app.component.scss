@@ -1,0 +1,97 @@
+/* Add padding to the content */
+#main-content {
+    padding: 16px;
+}
+
+/* Style for the header and toolbar */
+ion-header {
+    background-color: #3880ff;
+    color: white;
+}
+
+ion-toolbar {
+    --background: #3880ff;
+}
+
+ion-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Sidebar menu styles */
+ion-menu {
+    --width: 270px;
+    /* Adjusted width for better layout */
+}
+
+ion-item {
+    --background: #f0f0f0;
+    --color: #333;
+    margin: 10px 20px;
+    /* Added margins for spacing */
+    padding: 12px 16px;
+    /* Added padding for better click area */
+    border-radius: 10px;
+    /* Rounded corners for menu items */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Shadow for elevation */
+    transition: all 0.3s ease;
+    /* Smooth transition for hover effect */
+}
+
+/* Hover effect for menu items */
+ion-item:hover {
+    --background: #3880ff;
+    --color: white;
+    transform: translateY(-2px);
+    /* Slight lift on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    /* Increased shadow on hover */
+}
+
+/* Custom class for menu items to maintain consistent styling */
+.menu-item {
+    border-radius: 12px;
+    /* Ensure items have rounded corners */
+}
+
+/* Add padding to the content */
+#main-content {
+    padding: 16px;
+}
+
+/* Style for the header and toolbar */
+ion-header {
+    background-color: #3880ff;
+    color: white;
+}
+
+ion-toolbar {
+    --background: #3880ff;
+}
+
+ion-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Menu content area */
+ion-content {
+    background-color: #f9f9f9;
+    padding-top: 20px;
+    /* Extra space on top */
+}
+
+/* Menu button styles */
+ion-menu-button {
+    font-size: 20px;
+    color: white;
+}
+
+/* Adjust overall page margins */
+ion-app {
+    --ion-padding-top: 0;
+    --ion-padding-bottom: 0;
+}

@@ -13,30 +13,37 @@
       <div class="field-value">
         <!-- Regular fields -->
         <ng-container *ngIf="field.key !== 'location'  && field.key !== 'profilePic'; else specialField">
-          <ion-text>{{ userData[field.key] }}</ion-text>
+          <ion-title>{{ userData[field.key] | titlecase }}</ion-title>
         </ng-container>
 
-         <!-- Special fields: location and profilePic -->
-         <ng-template #specialField>
+        <!-- Special fields: location and profilePic -->
+        <ng-template #specialField>
           <!-- Profile Picture -->
           <div *ngIf="field.key === 'profilePic'">
             <img [src]="userData.profilePic" alt="Profile Picture" class="profile-picture" />
           </div>
           <!-- Location -->
           <div *ngIf="field.key === 'location'">
-            <ion-text>Lat: {{ userData.location?.lat }}</ion-text>,
-            <ion-text>Lng: {{ userData.location?.lng }}</ion-text>
+            <ion-text>
+              Lat: {{ userData.location?.lat }}
+              <br />
+              Lng: {{ userData.location?.lng }}
+            </ion-text>
           </div>
         </ng-template>
       </div>
-      <ion-button fill="clear" slot="end" (click)="editField(field.key)">
-        <ion-icon slot="icon-only" name="create"></ion-icon>
-      </ion-button>
+      <ng-container *ngIf="field.key !== 'location'">
+        <ion-button fill="clear" slot="end" (click)="editField(field.key)">
+          <ion-icon slot="icon-only" name="create"></ion-icon>
+        </ion-button>
+      </ng-container>
     </ion-item>
   </ion-list>
 
   <!-- Submit Button -->
- 
-<ion-button expand="full" (click)="openConfirmModal()">Submit</ion-button>
+
+  <div class="submit-button-div">
+    <ion-button expand="full" (click)="openConfirmModal()" id="submit-button">Submit</ion-button>
+  </div>
 
 </ion-content>

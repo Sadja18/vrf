@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'editable-preview',
+    redirectTo: 'user-input',
     pathMatch: 'full'
   },
   {

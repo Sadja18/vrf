@@ -1,4 +1,77 @@
+/* Add padding and margin for better spacing */
+ion-row {
+    margin-bottom: 16px;
+}
+
+/* Style for input container */
+.input-container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #fff;
+}
+
+/* Floating label inside the input container */
+ion-label[position="floating"] {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+/* Style for the Profile Picture Capture Button */
+.capture-btn {
+    width: auto;
+    /* Limit the width of the button */
+    max-width: 120px;
+    /* Set a maximum width */
+    margin-top: 10px;
+}
+
+/* Gender radio button group using grid layout */
+.radio-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* 3 equal columns */
+    gap: 10px;
+    /* Space between items */
+    align-items: left;
+    text-align: left;
+}
+
+.radio-option {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Education and Location Select Input styling */
+ion-select {
+    width: 100%;
+}
+
+/* Adjust the map container to be responsive */
 #map {
     height: 300px;
     width: 100%;
+    // /* Ensure map takes full width */
+    // border-radius: 8px;
+    // background-color: #f0f0f0;
+    // margin-top: 16px;
+}
+
+/* Submit button width adjustment */
+.submit-btn {
+    width: auto;
+    /* Reduce width */
+    max-width: 250px;
+    /* Limit the width */
+    margin-top: 16px;
+}
+
+/* Make sure the buttons take up less width */
+ion-button[expand="full"] {
+    max-width: 250px;
+    /* Set a maximum width for submit button */
+    margin: 16px auto;
 }
