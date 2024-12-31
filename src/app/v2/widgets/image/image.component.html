@@ -1,13 +1,19 @@
 <ion-item class="image-picker">
-  <ion-button (click)="takePicture()">Capture Image</ion-button>
-  <ion-button (click)="pickImage()">Select from Gallery</ion-button>
+  <div class="button-container">
+    <ion-button (click)="takePicture()">Capture Image</ion-button>
+  </div>
+  <div class="preview-container">
+    <div *ngIf="previewPic">
+      <ion-img [src]="previewPic" (click)="zoomImage()" class="image-preview"></ion-img>
+    </div>
+    <div *ngIf="!previewPic">
+      <ion-img src="assets/placeholder.png" (click)="zoomImage()" class="image-preview"></ion-img>
+    </div>
+  </div>
 </ion-item>
 
-<div *ngIf="previewPic" class="image-preview-container">
-  <ion-img [src]="previewPic" (click)="zoomImage()" class="image-preview"></ion-img>
-</div>
 
 <!-- Optionally display a placeholder if no image is selected -->
-<div *ngIf="!previewPic" class="image-preview-container">
+<!-- <div *ngIf="!previewPic" class="image-preview-container">
   <ion-img src="assets/placeholder.png" (click)="zoomImage()" class="image-preview"></ion-img>
-</div>
+</div> -->

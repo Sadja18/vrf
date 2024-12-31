@@ -1,6 +1,6 @@
 .parent {
   width: 100%;
-  background-color: aqua;
+  // background-color: aqua;
   margin: 2px 2px;
   padding: 20px 12px;
   text-align: center;
@@ -9,6 +9,9 @@
 
 .input-form-container {
   margin: 2px 2px;
+  padding: 2px 2px;
+  border: 2px solid black;
+
   // border: 2px solid black;
 }
 
@@ -28,6 +31,71 @@
   /* Optional: Add space between the buttons */
 }
 
+/* Base styles for the wrappers */
+.first-name-wrapper,
+.last-name-wrapper,
+.mobile-wrapper,
+.dob-wrapper,
+.address-wrapper,
+.gender-wrapper,
+.education-wrapper,
+.profilePic-wrapper,
+.location-wrapper {
+  background-color: #f5f5f5; /* Light grey background */
+  border-radius: 8px;
+  margin: 8px 0;
+  padding: 12px;
+  transition:
+    background-color 0.3s,
+    border 0.3s;
+  border: 1px solid #ddd; /* Light border */
+}
+
+/* On focus of ion-input, make the background more greyish */
+.first-name-wrapper ion-input:focus,
+.last-name-wrapper ion-input:focus,
+.mobile-wrapper ion-input:focus,
+.dob-wrapper ion-datetime:focus,
+.address-wrapper ion-textarea:focus,
+.gender-wrapper ion-input:focus,
+.education-wrapper ion-select:focus {
+  background-color: #e0e0e0; /* Darker greyish background on focus */
+  border: 1px solid #bbb; /* Slightly darker border on focus */
+}
+
+/* For ion-radio-group and select inputs */
+.gender-wrapper ion-radio-group:focus,
+// ion-label,
+.education-wrapper ion-select:focus {
+  background-color: #e0e0e0;
+  border: 1px solid #bbb;
+}
+
+/* For ion-textarea, increase height on focus to make it more interactive */
+.address-wrapper ion-textarea:focus {
+  min-height: 120px; /* Allow more space for the user to type */
+}
+
+/* For custom styles when focusing on the ion-select and other inputs */
+.profilePic-wrapper ion-item {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 2px 0;
+}
+
+/* When focused, background becomes slightly darker */
+.profilePic-wrapper ion-item:focus {
+  background-color: #e0e0e0;
+  border: 1px solid #bbb;
+}
+
+/* For the ion-label inside focused inputs */
+ion-label {
+  color: #333; /* Dark text for label */
+}
+
 ion-button {
   flex: 1;
   /* Ensure both buttons take equal width */
@@ -36,13 +104,54 @@ ion-button {
 }
 
 .gender-radio-group {
-  display: flex;
+  display: inline;
   justify-content: space-between;
   width: 100%;
 }
 
 .gender-radio-group ion-item {
-  display: inline-flex;
+  display: inline-block;
   align-items: center;
-  margin-right: 10px; /* Optional space between the radio buttons */
+  // margin-right: 10px; /* Optional space between the radio buttons */
+  // background-color: #e0e0e0;
+}
+
+.location-wrapper {
+  // background-color: pink;
+  // padding: 5px 5px;
+  height: 300px;
+  width: 100%;
+}
+
+#mapInput {
+  height: 300px;
+  width: 100%;
+}
+
+#map-input {
+  height: 240px;
+  width: 100%;
+}
+
+.custom-toast {
+  --background: var(--ion-color-primary); /* Default background color */
+  color: #ffffff; /* White text */
+  font-size: 1.4rem; /* Large font size */
+  text-align: center; /* Center align text */
+  border-radius: 8px; /* Rounded corners */
+  padding: 16px; /* Add padding for better visibility */
+}
+
+/* Add specific styles for different types if needed */
+.custom-toast.success {
+  --background: green; /* Success toast background */
+}
+
+.custom-toast.error {
+  --background: red; /* Error toast background */
+}
+
+.custom-toast.info {
+  --background: yellow; /* Info toast background */
+  color: #000000; /* Dark text for contrast with yellow */
 }

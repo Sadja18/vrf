@@ -12,6 +12,11 @@ export class ValidationService {
     return nameRegex.test(name);
   }
 
+  validateLastName(name: string): boolean {
+    const nameRegex = /^[a-zA-Z\s]+$/; // Allow only letters and spaces
+    return nameRegex.test(name) || name==='';
+  }
+
   validateMobile(mobile: string): boolean {
     const mobileRegex = /^[0-9]{10}$/; // Exactly 10 digits
     return mobileRegex.test(mobile);

@@ -11,6 +11,7 @@
         <div class="first-name-wrapper">
           <ion-item>
             <ion-input
+            fill="solid"
               formControlName="firstName"
               label="First Name"
               labelPlacement="floating"
@@ -18,6 +19,7 @@
               helperText="Enter your first name"
               errorText="Invalid first name (only letters and spaces allowed)"
               required
+              autocapitalize="words"
             ></ion-input>
           </ion-item>
         </div>
@@ -26,12 +28,14 @@
         <div class="last-name-wrapper">
           <ion-item>
             <ion-input
+            fill="solid"
               formControlName="lastName"
               label="Last Name"
               labelPlacement="floating"
               type="text"
               helperText="Enter your last name"
               errorText="Invalid last name (only letters and spaces allowed)"
+              autocapitalize="words"
             ></ion-input>
           </ion-item>
         </div>
@@ -40,6 +44,7 @@
         <div class="mobile-wrapper">
           <ion-item>
             <ion-input
+            fill="solid"
               formControlName="mobile"
               label="Mobile"
               labelPlacement="floating"
@@ -85,6 +90,11 @@
               helperText="Enter your address"
               errorText="Invalid address (only numbers, alphabets, spaces, /, and commas)"
               required
+              [counter]="true"
+              maxlength="400"
+              [counterFormatter]="customCounterFormatter"
+              [autoGrow]="true"
+              autocapitalize="words"
             ></ion-textarea>
           </ion-item>
         </div>
@@ -136,14 +146,7 @@
 
         <!-- TODO: Location movement to be implemented -->
         <div class="location-wrapper">
-          <ion-item>
-            <ion-input
-              label="Location"
-              labelPlacement="floating"
-              helperText="Enter your location"
-              errorText="Enter your location"
-            ></ion-input>
-          </ion-item>
+          <div id="mapInput"></div>
         </div>
       </div>
 

@@ -1,20 +1,66 @@
 .image-picker {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+  // max-width: 300px;
+  // background-color: pink;
   padding: 16px;
+  margin: 5px auto;
+  border-radius: 8px;
 }
 
-.image-preview-container {
+.button-container {
+  flex: 1;
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.preview-container {
+  flex: 0 0 150px; /* Fixed size for the preview column */
+  display: flex;
+  height: 180px;
+  width: 150px;
+  max-width: 150px;
+  margin-left: 10px;
+  padding-left: 10px;
+  // background-color: red;
   justify-content: center;
   align-items: center;
-  margin-top: 16px;
 }
 
 .image-preview {
-  width: 40px;
-  height: 40px;
+  width: 130px;
+  height: 130px;
+  margin-right:10px;
   border-radius: 50%;
+  // margin-left: 5px;
   cursor: pointer;
   object-fit: cover;
+}
+
+
+.custom-toast {
+  --background: var(--ion-color-primary); /* Default background color */
+  color: #ffffff; /* White text */
+  font-size: 1.4rem; /* Large font size */
+  text-align: center; /* Center align text */
+  border-radius: 8px; /* Rounded corners */
+  padding: 16px; /* Add padding for better visibility */
+}
+
+/* Add specific styles for different types if needed */
+.custom-toast.success {
+  --background: green; /* Success toast background */
+}
+
+.custom-toast.error {
+  --background: red; /* Error toast background */
+}
+
+.custom-toast.info {
+  --background: yellow; /* Info toast background */
+  color: #000000; /* Dark text for contrast with yellow */
 }
