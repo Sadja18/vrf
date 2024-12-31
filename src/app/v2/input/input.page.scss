@@ -55,7 +55,7 @@
 .first-name-wrapper ion-input:focus,
 .last-name-wrapper ion-input:focus,
 .mobile-wrapper ion-input:focus,
-.dob-wrapper ion-datetime:focus,
+// .dob-wrapper ion-datetime:focus,
 .address-wrapper ion-textarea:focus,
 .gender-wrapper ion-input:focus,
 .education-wrapper ion-select:focus {
@@ -131,4 +131,14 @@ ion-button {
 #map-input {
   height: 240px;
   width: 100%;
+}
+
+.dob-wrapper{
+  // background-color: blue;
+  text-align: left;
+
+}
+
+.dob-wrapper ion-input {
+  background-color: pink;
 }

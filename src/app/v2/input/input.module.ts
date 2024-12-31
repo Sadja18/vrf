@@ -8,6 +8,7 @@ import { InputPageRoutingModule } from './input-routing.module';
 
 import { InputPage } from './input.page';
 import { ImageComponent } from '../widgets/image/image.component';
+import { DateFormatPipe } from 'src/app/date-format.pipe';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { ImageComponent } from '../widgets/image/image.component';
     InputPageRoutingModule,
     ReactiveFormsModule,
     ImageComponent,
+    DateFormatPipe
   ],
   declarations: [InputPage]
 })

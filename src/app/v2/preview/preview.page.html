@@ -17,7 +17,7 @@
               <!-- For dateOfBirth -->
               <span *ngSwitchCase="'dateOfBirth'">
                 <!-- {{ userData[field.key] | date:'dd-MM-yyyy' }} -->
-                  {{ userData.dateOfBirth  }}
+                  {{ userData.dateOfBirth | dateFormat  }}
               </span>
 
               <!-- For location -->

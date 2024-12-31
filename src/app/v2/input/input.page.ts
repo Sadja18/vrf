@@ -53,7 +53,7 @@ export class InputPage implements OnInit {
       lastName: ['', [, this.lastNameValidator.bind(this)]],
       mobile: ['', [Validators.required, this.mobileValidator.bind(this)]],
       dateOfBirth: [
-        '1970-03-03',
+        '1970-12-',
         [Validators.required, this.dobValidator.bind(this)],
       ],
       gender: ['', [Validators.required, this.genderValidator.bind(this)]],
@@ -73,82 +73,58 @@ export class InputPage implements OnInit {
     });
   }
 
-  nameValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  nameValidator(control: AbstractControl): { [key: string]: string } | null {
     return this.validationService.validateName(control.value)
       ? null
-      : { invalidName: true };
+      : { invalidName: 'Invalid name format' };
   }
 
   lastNameValidator(
     control: AbstractControl,
-  ): { [key: string]: boolean } | null {
+  ): { [key: string]: string } | null {
     console.log(control.value);
-    return this.validationService.validateName(control.value) ||
-      control.value == null ||
-      control.value === ''
-      ? null
-      : { invalidName: true };
+    if (this.validationService.validateName(control.value)) {
+      return null;
+    }
+
+    if (control.value == null || control.value === '') {
+      return null; // Allow empty last name
+    }
+
+    return { invalidName: 'Invalid last name format' };
   }
 
-  mobileValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  mobileValidator(control: AbstractControl): { [key: string]: string } | null {
     return this.validationService.validateMobile(control.value)
       ? null
-      : { invalidMobile: true };
+      : { invalidMobile: 'Invalid mobile number' };
   }
 
-  dobValidator(control: AbstractControl): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (!control.value) {
-        return { required: true }; // Handle required error
-      }
-
-      const dob = control.value;
-      const dobRegex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD format
-      const date = new Date(dob);
-      const today = new Date();
-
-      if (!dobRegex.test(dob)) {
-        return { invalidDateFormat: true }; // Invalid date format
-      }
-
-      if (date > today) {
-        return { futureDate: true }; // Prevent future date
-      }
-
-      return null; // Valid
-    };
-  }
-
-  genderValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  genderValidator(control: AbstractControl): { [key: string]: string } | null {
     return this.validationService.validateGender(control.value)
       ? null
-      : { invalidGender: true };
+      : { invalidGender: 'Invalid gender selected' };
   }
 
   educationValidator(
     control: AbstractControl,
-  ): { [key: string]: boolean } | null {
+  ): { [key: string]: string } | null {
     return this.validationService.validateEducation(control.value)
       ? null
-      : { invalidEducation: true };
+      : { invalidEducation: 'Invalid education level' };
   }
 
-  addressValidator(
-    control: AbstractControl,
-  ): { [key: string]: boolean } | null {
-    // control.setValue(this.validationService.validateAddress(control.value));
-    // return null; // Address validation modifies the value; always return valid
+  addressValidator(control: AbstractControl): { [key: string]: string } | null {
     const value = control.value;
 
     if (typeof value !== 'string') {
-      return { invalidType: true }; // If value is not a string
+      return { invalidType: 'Address must be a string' };
     }
 
-    // Allow letters, numbers, spaces, commas, forward slashes, and dashes
     const validPattern = /^[a-zA-Z0-9\s,/-]*$/;
 
     if (!validPattern.test(value)) {
-      return { invalidAddress: true }; // Invalid characters found
+      return { invalidAddress: 'Invalid address format' };
     }
 
     return null; // No errors
@@ -156,18 +132,50 @@ export class InputPage implements OnInit {
 
   profilePicValidator(
     control: AbstractControl,
-  ): { [key: string]: boolean } | null {
+  ): { [key: string]: string } | null {
     return this.validationService.validateProfilePic(control.value)
       ? null
-      : { invalidProfilePic: true };
+      : { invalidProfilePic: 'Profile picture is invalid' };
   }
 
   locationValidator(
     control: AbstractControl,
-  ): { [key: string]: boolean } | null {
+  ): { [key: string]: string } | null {
     return this.validationService.validateLocation(control.value)
       ? null
-      : { invalidLocation: true };
+      : { invalidLocation: 'Location is invalid' };
+  }
+
+  dobValidator(control: AbstractControl): { [key: string]: string } | null {
+    const dob = control.value;
+    const dobRegex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD format
+    const date = new Date(dob);
+    const today = new Date();
+
+    if (!dobRegex.test(dob)) {
+      return { invalidDOB: 'Date of Birth must be in YYYY-MM-DD format' };
+    }
+
+    if (date > today) {
+      return { invalidDOB: 'Date of Birth cannot be a future date' };
+    }
+
+    // Calculate age based on the date of birth
+    let age = today.getFullYear() - date.getFullYear();
+    const monthDiff = today.getMonth() - date.getMonth();
+    const dayDiff = today.getDate() - date.getDate();
+
+    // Adjust age if birthday hasn't occurred yet this year
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+      age--;
+    }
+
+    // Ensure the person is at least 10 years old
+    if (age < 10) {
+      return { invalidDOB: 'You must be at least 10 years old' };
+    }
+
+    return null; // Valid date of birth
   }
 
   async showToast(message: string, type: string) {
@@ -307,36 +315,47 @@ export class InputPage implements OnInit {
     return this.user;
   }
 
+  // Helper method to get the error message based on the key
+  getErrorMessage(errorKey: string): string {
+    const errorMessages: { [key: string]: string } = {
+      invalidName: 'Invalid name format',
+      invalidLastName: 'Invalid last name format',
+      invalidMobile: 'Invalid mobile number',
+      invalidGender: 'Invalid gender selected',
+      invalidEducation: 'Invalid education level',
+      invalidAddress: 'Invalid address format',
+      invalidProfilePic: 'Profile picture is invalid',
+      invalidLocation: 'Location is invalid',
+      invalidDOB: 'Invalid Date of Birth',
+      invalidType: 'Address must be a string',
+    };
+
+    return errorMessages[errorKey] || 'Invalid input';
+  }
+
   async onSubmit() {
     if (this.userForm.invalid) {
-      this.showToast('Please fill all required fields correctly.', 'error');
-      // return;
-      // Collect names of invalid fields
-      let errorMessage = 'Please fill all required fields correctly.';
-      const invalidFields = Object.keys(this.userForm.controls)
-        .map((field) => {
-          const control = this.userForm.get(field);
-          if (control?.invalid) {
-            const errors = control.errors;
-            if (errors?.['required']) {
-              return `${field} is required`;
-            } else if (errors?.['invalidDateFormat']) {
-              return `Date of Birth has an invalid format`;
-            } else if (errors?.['futureDate']) {
-              return `Date of Birth cannot be in the future`;
+      // Loop through the form controls and gather all error messages
+      let errorMessages: string[] = [];
+
+      Object.keys(this.userForm.controls).forEach((key) => {
+        const control = this.userForm.get(key);
+        if (control && control.errors) {
+          const errors = control.errors;
+          for (const errorKey in errors) {
+            if (errors.hasOwnProperty(errorKey)) {
+              // Push the error message to the array
+              errorMessages.push(this.getErrorMessage(errorKey));
             }
           }
-          return '';
-        })
-        .filter((field) => field !== '');
+        }
+      });
 
-      if (invalidFields.length > 0) {
-        errorMessage = `The following fields are invalid: ${invalidFields.join(', ')}`;
-      }
-
-      this.showToast(errorMessage, 'error');
+      // Show the first error message (or display all)
+      this.showToast(errorMessages.join(', '), 'error');
       return;
     }
+
     console.log(this.userForm);
     const mobileNumber = this.userForm.get('mobile')?.value;
 

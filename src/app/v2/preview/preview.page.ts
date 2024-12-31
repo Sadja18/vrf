@@ -6,6 +6,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 import { UserService } from 'src/app/services/user.service';
 import { ZoomModalComponent } from '../zoom-modal/zoom-modal.component';
 import { MapModalComponent } from '../map-modal/map-modal.component';
+import { DateFormatPipe } from 'src/app/date-format.pipe';
 
 @Component({
   selector: 'app-preview',

@@ -3,13 +3,9 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
     path: '',
     redirectTo: 'input',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   // {
   //   path: 'screen3',
@@ -25,22 +21,25 @@ const routes: Routes = [
   // },
   {
     path: 'input',
-    loadChildren: () => import('./v2/input/input.module').then( m => m.InputPageModule)
+    loadChildren: () =>
+      import('./v2/input/input.module').then((m) => m.InputPageModule),
   },
   {
     path: 'preview',
-    loadChildren: () => import('./v2/preview/preview.module').then( m => m.PreviewPageModule)
+    loadChildren: () =>
+      import('./v2/preview/preview.module').then((m) => m.PreviewPageModule),
   },
   {
     path: 'list',
-    loadChildren: () => import('./v2/list/list.module').then( m => m.ListPageModule)
+    loadChildren: () =>
+      import('./v2/list/list.module').then((m) => m.ListPageModule),
   },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

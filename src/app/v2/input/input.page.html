@@ -11,7 +11,7 @@
         <div class="first-name-wrapper">
           <ion-item>
             <ion-input
-            fill="solid"
+              fill="solid"
               formControlName="firstName"
               label="First Name"
               labelPlacement="floating"
@@ -28,7 +28,7 @@
         <div class="last-name-wrapper">
           <ion-item>
             <ion-input
-            fill="solid"
+              fill="solid"
               formControlName="lastName"
               label="Last Name"
               labelPlacement="floating"
@@ -44,7 +44,7 @@
         <div class="mobile-wrapper">
           <ion-item>
             <ion-input
-            fill="solid"
+              fill="solid"
               formControlName="mobile"
               label="Mobile"
               labelPlacement="floating"
@@ -60,7 +60,7 @@
         <div class="dob-wrapper">
           <ion-item>
             <ion-label>Date of Birth</ion-label>
-            <br />
+            <br>
             <ion-datetime-button datetime="datetime"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
@@ -74,7 +74,9 @@
                   date: { day: '2-digit', month: '2-digit', year: 'numeric' }
                   }"
                   required
-                ></ion-datetime>
+                >
+                  <span slot="title">Date of Birth</span>
+                  </ion-datetime>
               </ng-template>
             </ion-modal>
           </ion-item>

@@ -9,6 +9,7 @@ import { PreviewPageRoutingModule } from './preview-routing.module';
 import { PreviewPage } from './preview.page';
 import { MapModalComponent } from '../map-modal/map-modal.component';
 import { ZoomModalComponent } from '../zoom-modal/zoom-modal.component';
+import { DateFormatPipe } from 'src/app/date-format.pipe';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { ZoomModalComponent } from '../zoom-modal/zoom-modal.component';
     PreviewPageRoutingModule,
     MapModalComponent,
     ZoomModalComponent,
+    DateFormatPipe
   ],
-  declarations: [PreviewPage],
+  declarations: [PreviewPage, ],
 })
 export class PreviewPageModule {}
