@@ -1,0 +1,38 @@
+.modal-content {
+  width: 80vw; /* Modal takes 80% of the viewport width */
+  height: 70vh; /* Modal takes 70% of the viewport height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.close-button {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.zoomed-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.zoomed-image {
+  max-width: 60vw; /* Max image width to 60% of the viewport width */
+  max-height: 60vh; /* Max image height to 60% of the viewport height */
+  object-fit: contain;
+}

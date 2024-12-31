@@ -11,18 +11,18 @@ const routes: Routes = [
     redirectTo: 'input',
     pathMatch: 'full'
   },
-  {
-    path: 'screen3',
-    loadChildren: () => import('./screen3/screen3.module').then( m => m.Screen3PageModule)
-  },
-  {
-    path: 'user-input',
-    loadChildren: () => import('./user-input/user-input.module').then( m => m.UserInputPageModule)
-  },
-  {
-    path: 'editable-preview',
-    loadChildren: () => import('./editable-preview/editable-preview.module').then( m => m.EditablePreviewPageModule)
-  },
+  // {
+  //   path: 'screen3',
+  //   loadChildren: () => import('./screen3/screen3.module').then( m => m.Screen3PageModule)
+  // },
+  // {
+  //   path: 'user-input',
+  //   loadChildren: () => import('./user-input/user-input.module').then( m => m.UserInputPageModule)
+  // },
+  // {
+  //   path: 'editable-preview',
+  //   loadChildren: () => import('./editable-preview/editable-preview.module').then( m => m.EditablePreviewPageModule)
+  // },
   {
     path: 'input',
     loadChildren: () => import('./v2/input/input.module').then( m => m.InputPageModule)

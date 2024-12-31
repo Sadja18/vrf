@@ -4,95 +4,169 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
-
   <div class="parent">
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
       <div class="input-form-container">
-
+        <!-- First Name -->
         <div class="first-name-wrapper">
-
           <ion-item>
-            <!-- <ion-label position="floating">First Name</ion-label> -->
-            <ion-input [(ngModel)]="user.firstName" label="First Name" labelPlacement="floating" name="firstName" required></ion-input>
+            <ion-input
+              formControlName="firstName"
+              label="First Name"
+              labelPlacement="floating"
+              type="text"
+              helperText="Enter your first name"
+              errorText="Invalid first name (only letters and spaces allowed)"
+              required
+            ></ion-input>
           </ion-item>
         </div>
-        <!--  -->
+
+        <!-- Last Name -->
         <div class="last-name-wrapper">
           <ion-item>
-            <!-- <ion-label position="floating">Last Name</ion-label> -->
-            <ion-input [(ngModel)]="user.lastName" label="Last Name" labelPlacement="floating" name="lastName" required></ion-input>
+            <ion-input
+              formControlName="lastName"
+              label="Last Name"
+              labelPlacement="floating"
+              type="text"
+              helperText="Enter your last name"
+              errorText="Invalid last name (only letters and spaces allowed)"
+            ></ion-input>
           </ion-item>
         </div>
-        <!--  -->
+
+        <!-- Mobile -->
         <div class="mobile-wrapper">
           <ion-item>
-            <!-- <ion-label position="floating">Mobile</ion-label> -->
-            <ion-input [(ngModel)]="user.mobile" name="mobile" label="Mobile" labelPlacement="floating" required></ion-input>
+            <ion-input
+              formControlName="mobile"
+              label="Mobile"
+              labelPlacement="floating"
+              type="number"
+              helperText="Enter your mobile number (without +91/0)"
+              errorText="Invalid mobile number"
+              required
+            ></ion-input>
           </ion-item>
         </div>
-        <!--  -->
+
+        <!-- Date of Birth -->
         <div class="dob-wrapper">
           <ion-item>
-            <!-- <ion-label for="dateOfBirth">Date of Birth</ion-label> -->
-            <!-- <ion-input type="date" [(ngModel)]="user.dateOfBirth" name="dateOfBirth" label="Date of Birth" labelPlacement="floating" value="{{ user.dateOfBirth | date: 'dd.MM.yyyy' }}"></ion-input> -->
+            <ion-label>Date of Birth</ion-label>
+            <br />
             <ion-datetime-button datetime="datetime"></ion-datetime-button>
-
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
-                <ion-datetime id="datetime" presentation="date" mode="md" [(ngModel)]="user.dateOfBirth" [showDefaultButtons]="true" [formatOptions]="{
+                <ion-datetime
+                  id="datetime"
+                  presentation="date"
+                  formControlName="dateOfBirth"
+                  mode="md"
+                  [showDefaultButtons]="true"
+                  [formatOptions]="{
                   date: { day: '2-digit', month: '2-digit', year: 'numeric' }
-                }"></ion-datetime>
+                  }"
+                  required
+                ></ion-datetime>
               </ng-template>
             </ion-modal>
           </ion-item>
         </div>
-        <!--  -->
+
+        <!-- Address -->
         <div class="address-wrapper">
           <ion-item>
-            <!-- <ion-label for="address">Address</ion-label> -->
-            <ion-textarea [(ngModel)]="user.address" name="address" labelPlacement="floating" label="'Address"></ion-textarea>
+            <ion-textarea
+              formControlName="address"
+              labelPlacement="floating"
+              label="Address"
+              helperText="Enter your address"
+              errorText="Invalid address (only numbers, alphabets, spaces, /, and commas)"
+              required
+            ></ion-textarea>
           </ion-item>
         </div>
-        <!--  -->
+
+        <!-- Gender -->
         <div class="gender-wrapper">
           <ion-item>
-            <!-- <ion-label for="gender">Gender</ion-label> -->
-            <ion-input label="Gender" labelPlacement="floating" [(ngModel)]="user.gender" name="gender"></ion-input>
+            <ion-label>Gender</ion-label>
           </ion-item>
+          <ion-radio-group formControlName="gender" class="gender-radio-group">
+            <ion-item>
+              <ion-label>Male</ion-label>
+              <ion-radio slot="start" value="Male" mode="md"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Female</ion-label>
+              <ion-radio slot="start" value="Female" mode="md"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Other</ion-label>
+              <ion-radio slot="start" value="Other" mode="md"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
         </div>
-        <!--  -->
+
+        <!-- Education -->
         <div class="education-wrapper">
           <ion-item>
-            <!-- <ion-label position="floating">Education</ion-label> -->
-            <ion-input [(ngModel)]="user.education" name="education"></ion-input>
+            <ion-label>Education</ion-label>
+            <ion-select formControlName="education" interface="popover">
+              <ion-select-option value="10th">10th</ion-select-option>
+              <ion-select-option value="12th">12th</ion-select-option>
+              <ion-select-option value="Bachelors">Bachelors</ion-select-option>
+              <ion-select-option value="Masters">Masters</ion-select-option>
+              <ion-select-option value="Other">Other</ion-select-option>
+            </ion-select>
           </ion-item>
         </div>
-        <!--  -->
+
+        <!-- TODO: Implement Image Capture/Picker using a separate new component which returns image path  -->
         <div class="profilePic-wrapper">
           <ion-item>
-            <!-- <ion-label position="floating">Profile Picture (Base64)</ion-label> -->
-            <ion-input [(ngModel)]="user.profilePic" name="profilePic"></ion-input>
+            <app-image
+              (imagePath)="userForm.get('profilePic')?.setValue($event)"
+              [initialBase64]="userForm.get('profilePic')?.value"
+            ></app-image>
           </ion-item>
         </div>
-        <!--  -->
+
+        <!-- TODO: Location movement to be implemented -->
         <div class="location-wrapper">
           <ion-item>
-            <!-- <ion-label position="floating">Location (Lat, Lng)</ion-label> -->
-            <ion-input [(ngModel)]="user.location.lat" name="lat"></ion-input>
-            <ion-input [(ngModel)]="user.location.lng" name="lng"></ion-input>
+            <ion-input
+              label="Location"
+              labelPlacement="floating"
+              helperText="Enter your location"
+              errorText="Enter your location"
+            ></ion-input>
           </ion-item>
         </div>
       </div>
-      <!-- <ion-footer> -->
+
       <div class="button-footer-wrapper">
-        <ion-button class="reset-btn" color="secondary" shape="round" expand="full" (click)="onReset()">
+        <ion-button
+          class="reset-btn"
+          color="secondary"
+          shape="round"
+          expand="full"
+          (click)="onReset()"
+        >
           Reset
         </ion-button>
-        <ion-button class="submit-btn" color="success" shape="round" expand="full" type="submit">
+        <ion-button
+          class="submit-btn"
+          color="success"
+          shape="round"
+          expand="full"
+          type="submit"
+        >
           Submit
         </ion-button>
       </div>
-      <!-- </ion-footer> -->
     </form>
   </div>
 </ion-content>

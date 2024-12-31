@@ -108,6 +108,16 @@ export class DatabaseService {
     }
   }
 
+  async clearUsersTable():Promise<void>{
+    if (!this.db) throw new Error('Database connection is not open');
+    try {
+      const result = await this.db.query('DELETE FROM users;');
+      console.log(result);
+    } catch (error) {
+      console.error('Error deleting users', error);
+    }
+  }
+
   async closeDatabase(): Promise<void> {
     if (this.db) {
       try {

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import {  IonicModule, ModalController } from '@ionic/angular';
-import {IonContent,IonToolbar, IonTitle, IonHeader, IonCol} from '@ionic/angular/standalone';
+
 @Component({
   selector: 'app-zoom-modal',
   templateUrl: './zoom-modal.component.html',
@@ -10,9 +10,6 @@ import {IonContent,IonToolbar, IonTitle, IonHeader, IonCol} from '@ionic/angular
   imports:[
     CommonModule,
     IonicModule,
-    IonContent,
-    IonTitle,
-    IonHeader,
     
   ]
 })

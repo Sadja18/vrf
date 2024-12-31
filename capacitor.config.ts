@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'assignment',
   webDir: 'www',
   server: {
-    url: 'http://192.168.204.188:8100', // Replace with your host machine IP
+    url: 'http://10.0.2.2:8100', // Replace with your host machine IP
     cleartext: true
   }
 };

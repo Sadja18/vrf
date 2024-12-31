@@ -16,9 +16,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./user-details-modal.component.scss'],
   imports: [
     IonHeader, CommonModule,
-    IonContent, IonTitle,
-    IonToolbar, IonButton,
-    IonButtons, IonItem,
+    IonContent,IonButton,
+   IonItem,
     IonAvatar, IonLabel, 
     IonGrid, IonRow,
     IonCol, IonFooter
