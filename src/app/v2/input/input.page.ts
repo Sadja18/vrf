@@ -165,8 +165,6 @@ export class InputPage implements OnInit {
     this.initMap();
   }
 
-  onLocationChange(location: { lat: number; lng: number }) {}
-
   async initMap() {
     const currentPosition = await this.getCurrentPosition();
     // console.log('called init map ', currentPosition);
@@ -236,14 +234,15 @@ export class InputPage implements OnInit {
   }
 
   onSubmit() {
-    // this.userService.setUserData(this.user);
-    // this.router.navigate(['/preview']);
     if (this.userForm.invalid) {
       this.showToast('Please fill all required fields correctly.', 'error');
       return;
     }
     console.log(this.userForm);
     this.showToast('Okay to submit', 'success');
+    this.userService.setUserData(this.user);
+    // Navigate to the preview screen
+    this.router.navigate(['/preview']);
   }
 
   async resetMap() {
