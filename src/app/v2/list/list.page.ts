@@ -30,7 +30,7 @@ export class ListPage implements OnInit {
       message,
       duration: 2000,
       position: 'top',
-      cssClass: `custom-toast ${type}`,
+      cssClass: `custom-toast-${type}`,
     });
     toast.present();
   }

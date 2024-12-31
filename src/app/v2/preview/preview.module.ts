@@ -7,14 +7,18 @@ import { IonicModule } from '@ionic/angular';
 import { PreviewPageRoutingModule } from './preview-routing.module';
 
 import { PreviewPage } from './preview.page';
+import { MapModalComponent } from '../map-modal/map-modal.component';
+import { ZoomModalComponent } from '../zoom-modal/zoom-modal.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PreviewPageRoutingModule
+    PreviewPageRoutingModule,
+    MapModalComponent,
+    ZoomModalComponent,
   ],
-  declarations: [PreviewPage]
+  declarations: [PreviewPage],
 })
 export class PreviewPageModule {}

@@ -5,9 +5,71 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">preview</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="wrapper">
+    <div class="container-data">
+      <ng-container *ngFor="let field of fields">
+        <div class="field-row">
+          <div class="field-name">
+            <span> {{ field.label }} </span>
+          </div>
+          <div class="field-value">
+            <ng-container [ngSwitch]="field.key">
+              <!-- For dateOfBirth -->
+              <span *ngSwitchCase="'dateOfBirth'">
+                <!-- {{ userData[field.key] | date:'dd-MM-yyyy' }} -->
+                  {{ userData.dateOfBirth  }}
+              </span>
+
+              <!-- For location -->
+              <div *ngSwitchCase="'location'" (click)="openMap()">
+                Latitude: {{ userData.location.lat }}<br />
+                Longitude: {{ userData.location.lng }}
+              </div>
+
+              <!-- For profilePic -->
+              <img
+                *ngSwitchCase="'profilePic'"
+                [src]="userData[field.key]"
+                alt="Profile Picture"
+                (click)="openProfileZoom()"
+              />
+
+              <!-- Default case -->
+              <span *ngSwitchDefault> {{ userData[field.key] }} </span>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="container-button">
+      <!-- <ion-button
+        expand="full"
+        shape="round"
+        color="danger"
+        (click)="onDelete()"
+      >
+        <ion-icon name="trash-sharp"></ion-icon>
+        Delete
+      </ion-button> -->
+
+      <ion-button
+        expand="full"
+        shape="round"
+        color="primary"
+        (click)="onEdit()"
+      >
+        <ion-icon name="pencil-sharp"></ion-icon>
+        Edit
+      </ion-button>
+      <ion-button
+        expand="full"
+        shape="round"
+        color="success"
+        (click)="onSave()"
+      >
+        <ion-icon name="save-sharp"></ion-icon>
+        Save
+      </ion-button>
+    </div>
+  </div>
 </ion-content>

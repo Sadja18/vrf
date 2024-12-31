@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
-import { CapacitorSQLite, SQLiteConnection, SQLiteDBConnection } from '@capacitor-community/sqlite';
+import {
+  CapacitorSQLite,
+  SQLiteConnection,
+  SQLiteDBConnection,
+} from '@capacitor-community/sqlite';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DatabaseService {
   private sqlite: SQLiteConnection;
@@ -10,17 +14,23 @@ export class DatabaseService {
 
   constructor() {
     this.sqlite = new SQLiteConnection(CapacitorSQLite);
-    
   }
 
   async initializeDatabase(): Promise<void> {
     try {
       const retCC = (await this.sqlite.checkConnectionsConsistency()).result;
-      const isConnection = (await this.sqlite.isConnection('appDB', false)).result;
+      const isConnection = (await this.sqlite.isConnection('appDB', false))
+        .result;
 
       if (!isConnection && !retCC) {
-        this.db = await this.sqlite.createConnection('appDB', false, 'no-encryption', 1, false);
-        // 
+        this.db = await this.sqlite.createConnection(
+          'appDB',
+          false,
+          'no-encryption',
+          1,
+          false,
+        );
+        //
         await this.db.open();
         await this.createTables();
       } else {
@@ -64,33 +74,36 @@ export class DatabaseService {
     profilePic: string,
     gender: string,
     education: string,
-    location: Record<string, any>
+    location: Record<string, any>,
   ): Promise<void> {
     if (!this.db) throw new Error('Database connection is not open');
-    
+
     const insertQuery = `
       INSERT INTO users (firstName, lastName, dateOfBirth, mobile, address, profilePic, gender, education, location) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
     `;
-    
+
     try {
       const stringifiedLocation = JSON.stringify(location);
-      console.log('stringi ', stringifiedLocation)
-      await this.db.run(insertQuery, [
-        firstName,
-        lastName,
-        dateOfBirth,
-        mobile,
-        address,
-        profilePic,
-        gender,
-        education,
-        stringifiedLocation
-      ]).then(response=>{
-        console.log('db run ', response);
-      }).catch(error=>{
-        console.log('db save error ', error)
-      });
+      console.log('stringi ', stringifiedLocation);
+      await this.db
+        .run(insertQuery, [
+          firstName,
+          lastName,
+          dateOfBirth,
+          mobile,
+          address,
+          profilePic,
+          gender,
+          education,
+          stringifiedLocation,
+        ])
+        .then((response) => {
+          console.log('db run ', response);
+        })
+        .catch((error) => {
+          console.log('db save error ', error);
+        });
     } catch (error) {
       console.error('Error adding user:', error);
     }
@@ -98,7 +111,7 @@ export class DatabaseService {
 
   async getUsers(): Promise<any[]> {
     if (!this.db) throw new Error('Database connection is not open');
-    
+
     try {
       const result = await this.db.query('SELECT * FROM users;');
       return result.values || [];
@@ -108,7 +121,24 @@ export class DatabaseService {
     }
   }
 
-  async clearUsersTable():Promise<void>{
+  async checkMobileExists(mobile: string): Promise<boolean> {
+    if (!this.db) throw new Error('Database connection is not open');
+
+    try {
+      const result = await this.db.query(
+        'SELECT COUNT(*) AS count FROM users WHERE mobile = ?;',
+        [mobile],
+      );
+
+      // Check if the count is greater than 0, meaning mobile exists
+      return result?.values?.[0]?.count > 0;
+    } catch (error) {
+      console.error('Error checking mobile number:', error);
+      return false;
+    }
+  }
+
+  async clearUsersTable(): Promise<void> {
     if (!this.db) throw new Error('Database connection is not open');
     try {
       const result = await this.db.query('DELETE FROM users;');

@@ -8,33 +8,30 @@ import { MapModalComponent } from '../map-modal/map-modal.component';
   selector: 'app-user-card',
   templateUrl: './user-card.component.html',
   styleUrls: ['./user-card.component.scss'],
-  standalone: false
+  standalone: false,
 })
 export class UserCardComponent implements OnInit {
   @Input() user!: User;
 
+  constructor(private modalController: ModalController) {}
 
+  ngOnInit() {}
 
-  constructor(private modalController: ModalController) { }
+  // Open Profile Picture Modal
+  async openProfileZoom() {
+    const modal = await this.modalController.create({
+      component: ZoomModalComponent,
+      componentProps: { profilePic: this.user.profilePic },
+    });
+    return await modal.present();
+  }
 
-  ngOnInit() { }
-
-// Open Profile Picture Modal
-async openProfileZoom() {
-  const modal = await this.modalController.create({
-    component: ZoomModalComponent,
-    componentProps: { profilePic: this.user.profilePic },
-  });
-  return await modal.present();
-}
-
-// Open Map Modal
-async openMap() {
-  const modal = await this.modalController.create({
-    component: MapModalComponent,
-    componentProps: { location: this.user.location },
-  });
-  return await modal.present();
-}
-
+  // Open Map Modal
+  async openMap() {
+    const modal = await this.modalController.create({
+      component: MapModalComponent,
+      componentProps: { location: this.user.location },
+    });
+    return await modal.present();
+  }
 }
