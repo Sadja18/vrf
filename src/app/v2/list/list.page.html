@@ -7,8 +7,15 @@
 <ion-content [fullscreen]="true">
   <div class="content-wrapper-list-page">
     <div class="card-item-parent">
-      <ng-container *ngFor="let user of userRecords">
-        <app-user-card [user]="user"></app-user-card>
+      <ng-container *ngIf="userRecords.length > 0">
+        <ng-container *ngFor="let user of userRecords">
+          <app-user-card [user]="user"></app-user-card>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="userRecords.length === 0">
+        <div>
+          No profiles saved
+        </div>
       </ng-container>
     </div>
   </div>

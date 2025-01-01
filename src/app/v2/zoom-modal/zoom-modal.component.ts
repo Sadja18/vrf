@@ -19,7 +19,7 @@ export class ZoomModalComponent  implements OnInit {
 
   constructor(private modalController: ModalController) {}
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
 
   dismiss() {

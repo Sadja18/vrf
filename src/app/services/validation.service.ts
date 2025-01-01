@@ -35,7 +35,7 @@ export class ValidationService {
   }
 
   validateEducation(education: string): boolean {
-    const validOptions = ['10th', '12th', 'Bachelors', 'Masters', 'Others'];
+    const validOptions = ['10th', '12th', 'Bachelors', 'Masters', 'Others',];
     return validOptions.includes(education);
   }
 

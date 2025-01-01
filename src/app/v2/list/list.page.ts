@@ -3,6 +3,7 @@ import { User } from '../../models/user.interface';
 import { DatabaseService } from '../../services/database.service';
 import { UserCardComponent } from '../user-card/user-card.component';
 import { ToastController } from '@ionic/angular';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 
 @Component({
   selector: 'app-list',
@@ -35,6 +36,68 @@ export class ListPage implements OnInit {
     toast.present();
   }
 
+  /**
+   * Resolves a local path to a web-compatible URI.
+   * @param localPath The local path to resolve.
+   * @returns A promise that resolves with the web URI.
+   */
+  private async resolveWebPath(localPath: string): Promise<string> {
+    try {
+      const fileName = localPath.split('DATA/')[1]; // Extract path after DATA/
+      const webPath = await Filesystem.getUri({
+        path: `${fileName}`,
+        directory: Directory.Data,
+      });
+
+      console.log(webPath);
+
+      const path = webPath.uri.replace('file://', '');
+
+      // console.log(webPath.uri);
+      // console.log(webPath);
+      // console.log(webPath.uri);
+
+      try {
+        const fileData = await Filesystem.readFile({
+          path: path,
+          directory: Directory.Data, // Make sure you specify the correct directory
+        });
+  
+        console.log('f');
+  
+        console.log(fileData);
+      } catch (error) {
+        console.error('f ', error)
+      }
+
+      return webPath.uri;
+
+      // const base64Image = await this.getBase64ImageFromFile(fileData.data);
+
+      // return base64Image; // Return the web-compatible URI
+    } catch (error) {
+      console.error('Error resolving web path:', error);
+      return ''; // Return an empty string if there's an error
+    }
+  }
+
+  async getBase64ImageFromFile(uri: string): Promise<string> {
+    // Strip the 'file://' part from the uri, as we only need the relative path.
+    const path = uri.replace('file://', '');
+
+    try {
+      const fileData = await Filesystem.readFile({
+        path,
+        directory: Directory.Data, // Make sure you specify the correct directory
+      });
+
+      return `data:image/png;base64,${fileData.data}`; // You may need to adjust the MIME type based on your file format (jpg, png, etc.)
+    } catch (error) {
+      console.error('Error reading file: ', error);
+      return '';
+    }
+  }
+
   async getUsers() {
     // Initialize the records array with the expected User type
     let records: User[] = [];
@@ -45,23 +108,29 @@ export class ListPage implements OnInit {
       console.log('db');
       console.log(response, ' ', typeof response);
 
-      // Ensure the response is in the correct format (assuming it's an array of records)
-      records = response.map((record: Record<string, any>) => {
-        // Parse the location if it's a string
-        const parsedLocation =
-          typeof record['location'] === 'string'
-            ? JSON.parse(record['location'])
-            : record['location'];
+      records = await Promise.all(
+        response.map(async (record: Record<string, any>) => {
+          const parsedLocation =
+            typeof record['location'] === 'string'
+              ? JSON.parse(record['location'])
+              : record['location'];
 
-        return {
-          ...record, // Spread the rest of the record
-          location: parsedLocation, // Update location to be an object
-        } as User; // Cast to the User type
-      });
+          // Resolve the profilePic path to a web-compatible URI
+          const profilePicUri =
+            record['profilePic'] && typeof record['profilePic'] === 'string'
+              ? await this.resolveWebPath(record['profilePic'])
+              : null;
 
-      console.log('Updated records: ', records);
-      // Assign the updated records to userRecords
+          return {
+            ...record,
+            location: parsedLocation,
+            profilePic: profilePicUri, // Replace profilePic with web-compatible URI
+          } as User;
+        }),
+      );
+
       this.userRecords = records;
+      console.log('Processed user records:', this.userRecords);
     } catch (error) {
       console.error('Error fetching users:', error);
     }

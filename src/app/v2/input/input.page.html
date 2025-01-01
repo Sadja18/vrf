@@ -9,144 +9,127 @@
       <div class="input-form-container">
         <!-- First Name -->
         <div class="first-name-wrapper">
-          <ion-item>
-            <ion-input
-              fill="solid"
-              formControlName="firstName"
-              label="First Name"
-              labelPlacement="floating"
-              type="text"
-              helperText="Enter your first name"
-              errorText="Invalid first name (only letters and spaces allowed)"
-              required
-              autocapitalize="words"
-            ></ion-input>
-          </ion-item>
+          <ion-input
+            fill="solid"
+            formControlName="firstName"
+            label="First Name"
+            labelPlacement="floating"
+            type="text"
+            helperText="Enter your first name"
+            errorText="Invalid first name (only letters and spaces allowed)"
+            required
+            autocapitalize="words"
+          ></ion-input>
         </div>
 
         <!-- Last Name -->
         <div class="last-name-wrapper">
-          <ion-item>
-            <ion-input
-              fill="solid"
-              formControlName="lastName"
-              label="Last Name"
-              labelPlacement="floating"
-              type="text"
-              helperText="Enter your last name"
-              errorText="Invalid last name (only letters and spaces allowed)"
-              autocapitalize="words"
-            ></ion-input>
-          </ion-item>
+          <ion-input
+            fill="solid"
+            formControlName="lastName"
+            label="Last Name"
+            labelPlacement="floating"
+            type="text"
+            helperText="Enter your last name"
+            errorText="Invalid last name (only letters and spaces allowed)"
+            autocapitalize="words"
+          ></ion-input>
         </div>
 
         <!-- Mobile -->
         <div class="mobile-wrapper">
-          <ion-item>
-            <ion-input
-              fill="solid"
-              formControlName="mobile"
-              label="Mobile"
-              labelPlacement="floating"
-              type="number"
-              helperText="Enter your mobile number (without +91/0)"
-              errorText="Invalid mobile number"
-              required
-            ></ion-input>
-          </ion-item>
+          <ion-input
+            fill="solid"
+            formControlName="mobile"
+            label="Mobile"
+            labelPlacement="floating"
+            type="number"
+            helperText="Enter your mobile number (without +91/0)"
+            errorText="Invalid mobile number"
+            required
+          ></ion-input>
         </div>
 
         <!-- Date of Birth -->
         <div class="dob-wrapper">
-          <ion-item>
-            <ion-label>Date of Birth</ion-label>
-            <br>
-            <ion-datetime-button datetime="datetime"></ion-datetime-button>
-            <ion-modal [keepContentsMounted]="true">
-              <ng-template>
-                <ion-datetime
-                  id="datetime"
-                  presentation="date"
-                  formControlName="dateOfBirth"
-                  mode="ios"
-                  [showDefaultButtons]="true"
-                  [formatOptions]="{
-                  date: { day: '2-digit', month: '2-digit', year: 'numeric' }
-                  }"
-                  required
-                >
-                  <span slot="title">Date of Birth</span>
-                  </ion-datetime>
-              </ng-template>
-            </ion-modal>
-          </ion-item>
-        </div>
-
-        <!-- Address -->
-        <div class="address-wrapper">
-          <ion-item>
-            <ion-textarea
-              formControlName="address"
-              labelPlacement="floating"
-              label="Address"
-              helperText="Enter your address"
-              errorText="Invalid address (only numbers, alphabets, spaces, /, and commas)"
-              required
-              [counter]="true"
-              maxlength="400"
-              [counterFormatter]="customCounterFormatter"
-              [autoGrow]="true"
-              autocapitalize="words"
-            ></ion-textarea>
-          </ion-item>
+          <ion-label class="dob-label">Date of Birth</ion-label>
+          <ion-datetime-button datetime="datetime"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime
+                id="datetime"
+                presentation="date"
+                formControlName="dateOfBirth"
+                [preferWheel]="true"
+                [showDefaultButtons]="true"
+                [formatOptions]="{
+                date: { day: '2-digit', month: '2-digit', year: 'numeric' }
+                }"
+                required
+              >
+                <span slot="title">Date of Birth</span>
+              </ion-datetime>
+            </ng-template>
+          </ion-modal>
         </div>
 
         <!-- Gender -->
         <div class="gender-wrapper">
-          <ion-item>
-            <ion-label>Gender</ion-label>
-          </ion-item>
+          <ion-label class="gender-label">Gender</ion-label>
           <ion-radio-group formControlName="gender" class="gender-radio-group">
-            <ion-item>
-              <ion-label>Male</ion-label>
-              <ion-radio slot="start" value="Male" mode="md"></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label>Female</ion-label>
-              <ion-radio slot="start" value="Female" mode="md"></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label>Other</ion-label>
-              <ion-radio slot="start" value="Other" mode="md"></ion-radio>
-            </ion-item>
+            <div class="gender-radio-item">
+              <ion-radio slot="start" value="Male">Male</ion-radio>
+            </div>
+            <div class="gender-radio-item">
+              <ion-radio slot="start" value="Female">Female</ion-radio>
+            </div>
+            <div class="gender-radio-item">
+              <ion-radio slot="start" value="Other">Other</ion-radio>
+            </div>
           </ion-radio-group>
         </div>
 
         <!-- Education -->
         <div class="education-wrapper">
-          <ion-item>
-            <ion-label>Education</ion-label>
-            <ion-select formControlName="education" interface="popover">
-              <ion-select-option value="10th">10th</ion-select-option>
-              <ion-select-option value="12th">12th</ion-select-option>
-              <ion-select-option value="Bachelors">Bachelors</ion-select-option>
-              <ion-select-option value="Masters">Masters</ion-select-option>
-              <ion-select-option value="Other">Other</ion-select-option>
-            </ion-select>
-          </ion-item>
+          <ion-label class="education-label">Education</ion-label>
+          <ion-select formControlName="education">
+            <ion-select-option value="10th"
+              >High School</ion-select-option
+            >
+            <ion-select-option value="12th">12th</ion-select-option>
+            <ion-select-option value="Bachelors">Bachelors</ion-select-option>
+            <ion-select-option value="Masters">Masters</ion-select-option>
+            <ion-select-option value="Others">Others</ion-select-option>
+
+          </ion-select>
         </div>
 
-        <!-- TODO: Implement Image Capture/Picker using a separate new component which returns image path  -->
+        <!-- Address -->
+        <div class="address-wrapper">
+          <ion-textarea
+            formControlName="address"
+            labelPlacement="floating"
+            label="Address"
+            helperText="Enter your address"
+            errorText="Invalid address (only numbers, alphabets, spaces, /, and commas)"
+            required
+            [counter]="true"
+            maxlength="400"
+            [counterFormatter]="customCounterFormatter"
+            [autoGrow]="true"
+            autocapitalize="words"
+          ></ion-textarea>
+        </div>
+
+        <!-- Done: Implement Image Capture/Picker using a separate new component which returns image path  -->
         <div class="profilePic-wrapper">
-          <ion-item>
-            <app-image
-              (imagePath)="userForm.get('profilePic')?.setValue($event)"
-              [initialBase64]="userForm.get('profilePic')?.value"
-            ></app-image>
-          </ion-item>
+          <app-image
+            (imagePath)="userForm.get('profilePic')?.setValue($event)"
+            [initialBase64]="userForm.get('profilePic')?.value"
+          ></app-image>
         </div>
 
-        <!-- TODO: Location movement to be implemented -->
+        <!-- Done: Location movement to be implemented -->
         <div class="location-wrapper">
           <div id="mapInput"></div>
         </div>

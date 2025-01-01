@@ -4,6 +4,7 @@ import {
   SQLiteConnection,
   SQLiteDBConnection,
 } from '@capacitor-community/sqlite';
+import { Directory, Filesystem, Encoding } from '@capacitor/filesystem';
 
 @Injectable({
   providedIn: 'root',
@@ -65,13 +66,51 @@ export class DatabaseService {
     }
   }
 
+  // // Helper function to save profile picture to filesystem
+  // private async saveProfilePicToFile(profilePicBase64: string): Promise<string> {
+  //   try {
+  //     // Generate a unique file name
+  //     const fileName = new Date().getTime() + '.png'; // Using timestamp to generate unique file name
+  //     const filePath = Directory.Data + '/Pictures/' + fileName;
+
+  //     // Write the base64 string as a file in the Pictures directory
+  //     await Filesystem.writeFile({
+  //       path: filePath,
+  //       data: profilePicBase64,
+  //       directory: Directory.Data,
+  //       encoding: Encoding.Base64,
+  //     });
+
+  //     return filePath;
+  //   } catch (error) {
+  //     console.error('Error saving profile picture:', error);
+  //     throw new Error('Failed to save profile picture');
+  //   }
+  // }
+
+  // // Helper function to convert image file to base64
+  // private async readProfilePicAsBase64(filePath: string): Promise<string> {
+  //   try {
+  //     const file = await Filesystem.readFile({
+  //       path: filePath,
+  //       directory: Directory.Data,
+  //       encoding: Encoding.BASE64,
+  //     });
+
+  //     return file.data;
+  //   } catch (error) {
+  //     console.error('Error reading profile picture:', error);
+  //     throw new Error('Failed to read profile picture');
+  //   }
+  // }
+
   async addUser(
     firstName: string,
     lastName: string,
     dateOfBirth: string,
     mobile: string,
     address: string,
-    profilePic: string,
+    profilePic: string, // Base64 string of the image
     gender: string,
     education: string,
     location: Record<string, any>,
@@ -84,28 +123,26 @@ export class DatabaseService {
     `;
 
     try {
+      // Save profilePic to file system and get the file path
+      // const profilePicPath = await this.saveProfilePicToFile(profilePic);
+      const profilePicPath = profilePic;
+
+
       const stringifiedLocation = JSON.stringify(location);
-      console.log('stringi ', stringifiedLocation);
-      await this.db
-        .run(insertQuery, [
-          firstName,
-          lastName,
-          dateOfBirth,
-          mobile,
-          address,
-          profilePic,
-          gender,
-          education,
-          stringifiedLocation,
-        ])
-        .then((response) => {
-          console.log('db run ', response);
-        })
-        .catch((error) => {
-          console.log('db save error ', error);
-        });
+      await this.db.run(insertQuery, [
+        firstName,
+        lastName,
+        dateOfBirth,
+        mobile,
+        address,
+        profilePicPath, // Save the file path instead of the base64 string
+        gender,
+        education,
+        stringifiedLocation,
+      ]);
     } catch (error) {
       console.error('Error adding user:', error);
+      throw error;
     }
   }
 
@@ -114,13 +151,21 @@ export class DatabaseService {
 
     try {
       const result = await this.db.query('SELECT * FROM users;');
-      return result.values || [];
+      const users = result.values || [];
+
+      // Convert file paths to base64 strings for profilePic
+      for (let user of users) {
+        if (user.profilePic) {
+          // user.profilePic = await this.readProfilePicAsBase64(user.profilePic);
+        }
+      }
+
+      return users;
     } catch (error) {
       console.error('Error fetching users:', error);
       return [];
     }
   }
-
   async checkMobileExists(mobile: string): Promise<boolean> {
     if (!this.db) throw new Error('Database connection is not open');
 

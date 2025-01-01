@@ -31,7 +31,7 @@ export class InputPage implements OnInit {
     gender: '',
     education: '',
     location: { lat: 0, lng: 0 },
-    dateOfBirth: '1970-03-03',
+    dateOfBirth: '1970-12-03',
     address: '',
   };
 
@@ -53,7 +53,7 @@ export class InputPage implements OnInit {
       lastName: ['', [, this.lastNameValidator.bind(this)]],
       mobile: ['', [Validators.required, this.mobileValidator.bind(this)]],
       dateOfBirth: [
-        '1970-12-',
+        '1970-12-03',
         [Validators.required, this.dobValidator.bind(this)],
       ],
       gender: ['', [Validators.required, this.genderValidator.bind(this)]],
@@ -63,7 +63,7 @@ export class InputPage implements OnInit {
       ],
       address: ['', [Validators.required, this.addressValidator.bind(this)]],
       profilePic: [
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAACWCAYAAADwkd5lAAAAAXNSR0IArs4c6QAAENtJREFUeF7tnFuMXtMbh98qMzEyiJlEKyLcOMQxSAVxJiRCRBCkEnWMSFAa0roggkTE6cKZEKcLXBBtERFpSzQRQmkI4UKManRaMlUGVXnX//99ptNvZu3T2uv07KSZdvZaa6/9vGu+X9ezdztj1apVWzZv3ix9fX0yMDBgvnJAAAIQgAAEJhPQrNi0aZNs3LhRZs6cKTNGRka2DA8Py+joqIyNjcn4+Ljon4eGhggT1g8EIACBzAn8+eefJh/WrVtnSGg+zJ49W3788cf/Bcgee+zRRTSxcX9/vwkS/cUBAQhAAAL5EFizZo3ZUOjGotemomeAdPBokGhHTR4dZHBw0ASJfuWAAAQgAIH0CHQ2EBoO+jijs9vodafTBsjEDp1BUVzpLRjuCAIQyJvAVIrKRqVwgPQKE/VhKC4bYs5DAAIQCJOATVHZZl0pQFBcNqychwAEIBAmgTKKynYHtQIExWXDy3kIQAAC/glUVVS2mTcWICguG2rOQwACEGiXQF1FZZutkwBBcdmwcx4CEICAGwJNKirbDJ0GCIrLhp/zEIAABOoTcKWobDNrLUBQXLZScB4CEIBAOQKuFZVtNl4CBMVlKwvnIQABCPQm0KaistXAa4CguGzl4TwEIAABEV+KysY+mABBcdlKxXkIQCA3Ar4VlY13kAGC4rKVjfMQgECqBEJSVDbGQQcIistWPs5DAAIpEAhVUdnYRhMgKC5bKTkPAQjERiB0RWXjGWWAoLhsZeU8BCAQKoGYFJWNYdQBguKylZfzEIBACARiVVQ2dskECIrLVmrOQwACbROIXVHZeCUZICguW9k5DwEIuCKQkqKyMUo6QFBctvJzHgIQaIJAqorKxiabAEFx2ZYC5yEAgbIEUldUNh5ZBgiKy7YsOA8BCExFICdFZVsFWQcIisu2PDgPAQgogVwVla36BEgPQhMXS39/vwwNDZlfHBCAQF4EcldUtmoTINMQ0iAZGxuT0dFRGR8fl8HBQRMk+pUDAhBIkwCKqnhdCZCCrDqLSgNFw2R4eNiESV9fX8ERaAYBCIRKAEVVrTIESAVuKK4K0OgCgQAJoKjqFYUAqcEPxVUDHl0h4IkAiqo58ARIQyxRXA2BZBgIOCCAonIAVUQIEAdcUVwOoDIkBCoQQFFVgFaiCwFSAlbZpiiussRoD4H6BFBU9RkWHYEAKUqqZjsUV02AdIfANARQVH6WBwHigTuKywN0LpkkARSV37ISIB75o7g8wufS0RJAUYVTOgIkkFqguAIpBNMIkgCKKsiy8BZWiGVBcYVYFebkgwCKygf14tdkB1KcVestUVytI+eCARBAUQVQhIJTIEAKgvLdDMXluwJc3yUBFJVLuu7GJkDcsXU2MorLGVoGbpkAiqpl4A1fjgBpGGibw6G42qTNtZoigKJqiqT/cQgQ/zVoZAYorkYwMogjAigqR2A9D0uAeC6Ai8ujuFxQZcwqBFBUVajF04cAiadWpWeK4iqNjA4NEEBRNQAxkiEIkEgKVXeaKK66BOk/HQEUVZ7rgwDJsO4orgyL7uiWUVSOwEYyLAESSaFcTBPF5YJq+mOiqNKvcdE7JECKkkq8HYor8QLXvD0UVU2AiXYnQBItbJ3bQnHVoZdWXxRVWvVs+m4IkKaJJjQeiiuhYpa4FRRVCViZNyVAMl8ARW8fxVWUVJztUFRx1s33rAkQ3xWI8PoorgiLNsWUUVTp1NLHnRAgPqgnck0UV5yFRFHFWbcQZ02AhFiVCOeE4gq7aCiqsOsT6+wIkFgrF/C8UVzhFAdFFU4tUpwJAZJiVQO5JxSXn0KgqPxwz/GqBEiOVfdwzygut9BRVG75MnpvAgQIK6N1Aiiu5pCjqJpjyUjlCRAg5ZnRoyECKK5qIFFU1bjRq3kCBEjzTBmxAgEU1/TQUFQVFhVdnBMgQJwj5gJlCaC4/iOGoiq7emjfJgECpE3aXKsUgVwVF4qq1DKhsUcCBIhH+Fy6OIHUFReKqvhaoGU4BAiQcGrBTAoSSElxoagKFp1mQRIgQIIsC5MqQiBWxYWiKlJd2sRAgACJoUrM0UogdMWForKWkAYREiBAIiwaU56eQEiKC0XFak2ZAAGScnUzvzdfigtFlfnCy+j2CZCMip3zrbpWXCiqnFdXvvdOgORb+2zvvEnFhaLKdhlx4yJCgLAMsiVQVXGhqLJdMtz4JAIECEsCAiJiU1woKpYJBLYlQICwKiAwicBkxdXX1ydjY2MyPDwsQ0NDon/mgAAEUFisAQhsQ2Cyourv75fx8XEZHBw0AaJfOSAAAQKENQABQ8CmqGyKC4wQyJEACivHqnPPXQJV3qJq8i0uSgGBmAkQIDFXj7lXItDUW1RV3+KqNGk6QSBAAgRIgEVhSs0TsCmquldEcdUlSP8YCRAgMVaNORcmUEVRFR58ioYorroE6R8LAQIklkoxz8IEmlJUhS84TZDo67+jo6O8xVUXJv2DJECABFkWJlWWgGtFVXY+k9ujuOoSpH+IBAiQEKvCnAoT8KGoCk8OxVUXFf0DJ0CABF4gprctgVAUVd3a8BZXXYL0902AAPFdAa5fiEDoiqrQTUzTCMVVlyD9fRAgQHxQ55qFCcSoqArfHIqrLir6eyZAgHguAJdPV1HVrS2Kqy5B+rsmQIC4Jsz4hQikrqgKQUBx1cVE/5YJECAtA+dyWxPIUVHVXQP8Q8W6BOnfFAECpCmSjFOYQCpvURW+YUcNUVyOwDJsYQIESGFUNKxDAEVVh569L29x2RnRonkCBEjzTBlxAgEUVfvLAcXVPvNcr0iA5Fp5h/eNonIIt8TQKK4SsGhaiQABUgkbnSYTQFGFvSZQXGHXJ9bZESCxVi6QeaOoAilEiWmguErAoum0BAgQFkhpAiiq0siC7IDiCrIsUU2KAImqXP4mi6Lyx76NK6O42qCc3jUIkPRq2ugdoagaxRnFYCiuKMoUxCQJkCDKENYkUFRh1cPXbFBcvsjHc10CJJ5aOZ0pisop3ugHR3FFX0InN0CAOMEaz6AoqnhqFcpMUVyhVML/PAgQ/zVofQYoqtaRJ3lBFFeSZS11UwRIKVzxNkZRxVu7GGaO4oqhSs3PkQBpnmlQI6KogipHFpNBcWVRZnOTBEiCtUZRJVjUCG8JxRVh0UpOmQApCSzU5iiqUCvDvJQAiivNdUCARF5XFFXkBcxw+iiudIpOgERYSxRVhEVjytsQQHHFvygIkEhqiKKKpFBMsxIBFFclbN47ESDeSzD9BFBUgReI6TVOAMXVOFJnAxIgztBWHxhFVZ0dPdMhgOIKv5YESCA1QlEFUgimESQBFFeQZeHfgfguC4rKdwW4fmwEUFzhVIwdiIdaoKg8QOeSyRFAcfkvKQHSUg1QVC2B5jJZEkBx+Sk7AeKYO4rKMWCGh8AkAiiu9pYEAeKANYrKAVSGhEBJAiiuksAqNCdAKkDr1QVF1RBIhoGAAwIoLgdQ+d9460NFUdVnyAgQaJMAiqs52uxAKrBEUVWARhcIBEYAxVW/IARIQYYoqoKgaAaBCAmguKoVjQCxcENRVVtY9IJArARQXMUrR4D0YIWiKr6AaAmBVAmguOyVJUD+zwhFZV8stIBArgRQXL0rn32AoKhy/UjgviFQjQCK6z9uWQYIiqraDw69IACB/wiguCSf/40XRcWPPgQg4IpAroor+R0IisrVjwzjQgACvQjkpLiSDBAUFT/YEICAbwI5KK5kAgRF5fvHhetDAAJTEUhVcUUfICgqfmghAIGYCKSkuKIMEBRVTD8uzBUCEJjqWcnY2JiMjo7K+Pi4DA4OytDQkPkayxFNgKCoYllSzBMCEChLIFbFFXyAoKjKLkXaQwACMROISXEFGSAoqpiXP3OHAASaIBDDW1zBBAiKqoklxxgQgECKBEJVXN4DBEWV4nLnniAAAVcEQlJcXgIEReVqaTEuBCCQC4EQFFdrAYKiymVZc58QgEBRAr/++qscdNBBcuaZZ8pjjz1muq1bt06uvPJKee+996Svr08uv/xyufvuu2XGjBnyzz//yC233CLPPvus/PXXX3LKKafIU089JTvttJN5HVhfC9ZXgoeHh80rwdq/c7z//vtyySWXyBFHHCGvvvpq9/v33nuvLFy4ULbffvvu9y644AJ57rnnzJ+ff/55ue2228y89t9/f3nyySfl0EMPNeecBwiKquhSoh0EIJAbgXnz5smKFSvk1FNP7QbI+eefbwLh0UcflV9++UVOPvlkuemmm+SKK66Qhx9+WJ544gl5++23ZZdddpHLLrtMZs6cKS+88EIXXS/Fpe0ffPBBOeCAA+S3337bKkBuvfVW2bBhgzzyyCPb4P/888/l+OOPlzfffFPmzJljrn///ffL119/LTvssIObAEFR5fZjwP1CAAJlCSxZskTuuusuOeOMM8wHse5ANm3aJLvuuqt89913sueee5oh9W/8L730ktmRHHvssXLNNdfI3LlzzblvvvlGDj74YNGdjIbJzjvvbIJHD91tbN68WW6//XZZtWqV2TXoruLLL7/cKkCuvfZaE0a6y5l8aLisXbvW7HI6h87rxRdflBNOOKG5AEFRlV0+tIcABHIloH/jP/LII2Xp0qXyyiuvyA8//GACRD/oNSRURXUO3aGcd9555oN8t912k3feecdoKD22bNliNJX2mzVrlhxyyCHy8ssvyx9//CG6u9Hva6h0Pp/vueceWb16tQmSjuK6+OKLZWRkxOxCVIMdddRRZrey1157ybnnnmvmozugzqHaTOejQVZbYaGocv0R4L4hAIGqBHQHcfjhh8uNN94od955ZzdAPvzwQzn77LPl559/7g798ccfm7/tb9y4Ufr7++WTTz6RAw88sHte/+sT3Z1oIL311lty8803m+cjqptUf0089FraX8/pMw0dT5+H6HOT+fPnGy11/fXXmzb66/TTTzfz0V1K5zjrrLPMfBYsWFAtQFBUVZcN/SAAgdwJvPbaa/LAAw+YD/3ttttuqwDRZw66u9DP2M7x7rvvGmWlf1nXXcMbb7whxxxzjDn9999/mx2Iaqn99tvPfE8fyutzkc8++2wb1Bogn376qQmNqd7i0vDR63z//fdyww03mPksWrSoO9Zxxx1n5nP11VcXDxAUVe7LnvuHAASaIHDhhRfK8uXLu29I6fMLDQJ9SL148WLzDESDZN999zWXU52kz0tUXemHtz7buOqqq8w5DQNVTKqfNEgef/zxrsK69NJLzdtck3cgnQDpfH/lypWy9957Gx2m6ky11EknnWQCRB/Yf/vtt+YZjB76TGX33XeX119/3VzXqrBQVE0sGcaAAAQg0JvARIWlLfSZhL6u+/TTTxuVpc8ctM1FF11kPtB196Jhog++dSegzz40OPTB+9FHHy2qwVRJadh89NFHss8++3QvPHEH0vmmPsTX1351bH1VWHcWX331lbm+PpvRV3r1WY2Ora/86mu9X3zxhdk99QwQFBVLHQIQgEA7BCYHiO4m9JVdDYkdd9xRrrvuOtG3ofTQXYL+Xj/sVTXp8wh9+D4wMCAnnniinHPOOea5ih533HGHqP5SVXbaaafJBx98YHYQGk76rEOVl2qun376yTzjWLZsmVFf+truQw89ZEJFdyT6wP2+++6T9evXy2GHHSbPPPNMV5d1A0Qb6xN4fbCih/559uzZ7RDkKhCAAAQgECyBqf4vLs2LGatXr96iDTTtNMk0hTggAAEIQAACkwnoLkb/vcrvv/9usuJf6hRfD7F13SUAAAAASUVORK5CYII=',
+        'data:image/png;base64,   iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==',
         [Validators.required, this.profilePicValidator.bind(this)],
       ],
       location: this.fb.group({
@@ -82,7 +82,7 @@ export class InputPage implements OnInit {
   lastNameValidator(
     control: AbstractControl,
   ): { [key: string]: string } | null {
-    console.log(control.value);
+    // console.log(control.value);
     if (this.validationService.validateName(control.value)) {
       return null;
     }
@@ -147,10 +147,16 @@ export class InputPage implements OnInit {
   }
 
   dobValidator(control: AbstractControl): { [key: string]: string } | null {
-    const dob = control.value;
+    let dob = control.value;
+
+    if (dob.includes('T')){
+      dob= dob.split("T")[0];
+    }
     const dobRegex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD format
     const date = new Date(dob);
     const today = new Date();
+
+    // console.log(dob);
 
     if (!dobRegex.test(dob)) {
       return { invalidDOB: 'Date of Birth must be in YYYY-MM-DD format' };
@@ -190,7 +196,7 @@ export class InputPage implements OnInit {
 
   ionViewDidEnter() {
     const storedUserData = this.userService.getUserData();
-    console.log(storedUserData);
+    // console.log(storedUserData);
     if (storedUserData) {
       this.userForm.patchValue(storedUserData); // Populate the form with existing data
       const location = storedUserData.location;
@@ -260,7 +266,7 @@ export class InputPage implements OnInit {
       updateTimeout = setTimeout(() => {
         const position = this.marker?.getLatLng();
         if (position) {
-          console.log('dragend position');
+          // console.log('dragend position');
           this.userForm?.get('location.lat')?.setValue(position.lat);
           this.userForm?.get('location.lng')?.setValue(position.lng);
           // Update and re-open the popup with the new coordinates
@@ -330,7 +336,7 @@ export class InputPage implements OnInit {
       invalidType: 'Address must be a string',
     };
 
-    return errorMessages[errorKey] || 'Invalid input';
+    return errorMessages[errorKey] || 'Invalid input' + ` ${errorKey}`;
   }
 
   async onSubmit() {
@@ -342,6 +348,7 @@ export class InputPage implements OnInit {
         const control = this.userForm.get(key);
         if (control && control.errors) {
           const errors = control.errors;
+          // console.log(errors);
           for (const errorKey in errors) {
             if (errors.hasOwnProperty(errorKey)) {
               // Push the error message to the array
@@ -373,7 +380,7 @@ export class InputPage implements OnInit {
 
     this.userService.setUserData(this.user);
     // Navigate to the preview screen
-    // this.router.navigate(['/preview']);
+    this.router.navigate(['/preview']);
   }
 
   async resetMap() {

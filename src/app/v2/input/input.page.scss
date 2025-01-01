@@ -19,7 +19,7 @@
   margin: 8px 2px;
 }
 
-.input-form-container div ion-item {
+.input-form-container div {
   border-radius: 1%;
 }
 
@@ -35,10 +35,7 @@
 .first-name-wrapper,
 .last-name-wrapper,
 .mobile-wrapper,
-.dob-wrapper,
 .address-wrapper,
-.gender-wrapper,
-.education-wrapper,
 .profilePic-wrapper,
 .location-wrapper {
   background-color: #f5f5f5; /* Light grey background */
@@ -49,26 +46,16 @@
     background-color 0.3s,
     border 0.3s;
   border: 1px solid #ddd; /* Light border */
+  text-align: left;
 }
 
 /* On focus of ion-input, make the background more greyish */
 .first-name-wrapper ion-input:focus,
 .last-name-wrapper ion-input:focus,
 .mobile-wrapper ion-input:focus,
-// .dob-wrapper ion-datetime:focus,
-.address-wrapper ion-textarea:focus,
-.gender-wrapper ion-input:focus,
-.education-wrapper ion-select:focus {
+.address-wrapper ion-textarea:focus {
   background-color: #e0e0e0; /* Darker greyish background on focus */
   border: 1px solid #bbb; /* Slightly darker border on focus */
-}
-
-/* For ion-radio-group and select inputs */
-.gender-wrapper ion-radio-group:focus,
-// ion-label,
-.education-wrapper ion-select:focus {
-  background-color: #e0e0e0;
-  border: 1px solid #bbb;
 }
 
 /* For ion-textarea, increase height on focus to make it more interactive */
@@ -103,17 +90,81 @@ ion-button {
   /* You can adjust this value to control the button width */
 }
 
-.gender-radio-group {
-  display: inline;
-  justify-content: space-between;
-  width: 100%;
+/* General Flex Styling */
+.dob-wrapper,
+.education-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 99%;
+  // background-color: pink;
+  // border: 1px solid black;
+  margin: 2vh 2vw;
+  padding: 2vh 2vw;
+  border-radius: 20%;
+  background-color: #f5f5f5;
 }
 
-.gender-radio-group ion-item {
-  display: inline-block;
-  align-items: center;
-  // margin-right: 10px; /* Optional space between the radio buttons */
-  // background-color: #e0e0e0;
+.dob-wrapper ion-label,
+.education-wrapper ion-label {
+  width: 40vw;
+  text-align: center;
+  background-color: #f5f5f5;
+}
+
+.dob-wrapper ion-datetime-button,
+.education-wrapper ion-select {
+  flex: 1;
+  text-align: center;
+  background-color: #f5f5f5;
+}
+
+/* Gender Wrapper Styles */
+.gender-wrapper {
+  // border: 1px solid black; /* Border around the whole section */
+  border-radius: 2%; /* Slightly rounded corners */
+  background-color: #f5f5f5;
+
+  padding: 2vh 2vw; /* Padding for spacing inside the section */
+}
+
+/* Gender Label */
+.gender-label {
+  display: block; /* Places the label on its own line */
+  font-weight: bold;
+  margin-bottom: 1vh;
+  text-align: center;
+  background-color: #f5f5f5;
+}
+
+/* Radio Group Styling */
+.gender-radio-group {
+  display: flex; /* Arrange radio buttons in a row */
+  flex-direction: row; /* Row layout for items */
+  justify-content: center; /* Center-align the group */
+  gap: 5px; /* Space between radio items */
+  margin: 1vh 1vw;
+  padding: 1vh 1vw;
+  background-color: #f5f5f5;
+}
+
+/* Individual Radio Item Styling */
+.gender-radio-item {
+  background-color: #f5f5f5; /* Light grey background for individual items */
+  border: 1px solid #ddd; /* Light border for items */
+  border-radius: 4px; /* Rounded corners for items */
+  padding: 1vh 1vw; /* Padding inside each item */
+  display: flex; /* Flex layout for radio and label alignment */
+  align-items: center; /* Align radio and text vertically */
+  background-color: #f5f5f5;
+}
+
+/* Radio Button Styles */
+.gender-wrapper ion-radio {
+  margin-right: 10px; /* Space between radio and text */
+  width: auto; /* Ensure radio adjusts dynamically */
+  text-align: center;
+  background-color: #f5f5f5;
 }
 
 .location-wrapper {
@@ -131,14 +182,4 @@ ion-button {
 #map-input {
   height: 240px;
   width: 100%;
-}
-
-.dob-wrapper{
-  // background-color: blue;
-  text-align: left;
-
-}
-
-.dob-wrapper ion-input {
-  background-color: pink;
 }

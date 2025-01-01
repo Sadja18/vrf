@@ -7,6 +7,9 @@ import { UserService } from 'src/app/services/user.service';
 import { ZoomModalComponent } from '../zoom-modal/zoom-modal.component';
 import { MapModalComponent } from '../map-modal/map-modal.component';
 import { DateFormatPipe } from 'src/app/date-format.pipe';
+import { Photo } from '@capacitor/camera';
+import { Directory, Filesystem } from '@capacitor/filesystem';
+import { ImageProcessorService } from 'src/app/services/image-processor.service';
 
 @Component({
   selector: 'app-preview',
@@ -24,9 +27,12 @@ export class PreviewPage implements OnInit {
     education: 'Masters',
     dateOfBirth: '1990-01-01',
     location: { lat: 12.9716, lng: 77.5946 },
-    profilePic: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD...',
+    profilePic:
+      'data:image/png;base64,   iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==',
   };
   fields: { label: string; key: keyof User }[] = [];
+
+  private debugMode: boolean = true;
 
   constructor(
     private userService: UserService,
@@ -34,10 +40,14 @@ export class PreviewPage implements OnInit {
     private databaseService: DatabaseService,
     private modalController: ModalController,
     private toastController: ToastController,
+    private imageProcessorService: ImageProcessorService,
   ) {}
 
   ngOnInit() {
-    this.userData = this.userService.getUserData();
+    if (!this.debugMode) {
+      this.userData = this.userService.getUserData();
+    }
+
     this.fields = [
       { label: 'First Name', key: 'firstName' },
       { label: 'Last Name', key: 'lastName' },
@@ -61,10 +71,39 @@ export class PreviewPage implements OnInit {
     this.saveUserData();
   }
 
-  saveUserData(): void {
+  async saveUserData(): Promise<void> {
     console.log('Saving user data:', this.userData);
     // Call adduser service
-    this.showToast('Data saved successfully', 'success');
+
+    console.log(this.userData.profilePic);
+
+    const savedFilePath =
+      await this.imageProcessorService.convertBase64AndSaveFile(
+        this.userData.profilePic,
+      );
+    console.log('Image saved at:', savedFilePath);
+
+    this.userData.profilePic = savedFilePath;
+
+    try {
+      this.databaseService.addUser(
+        this.userData.firstName,
+        this.userData.lastName,
+        this.userData.dateOfBirth,
+        this.userData.mobile,
+        this.userData.address,
+        this.userData.profilePic, //save file path
+        this.userData.gender,
+        this.userData.education,
+        this.userData.location,
+      );
+      this.showToast('Data saved successfully', 'success');
+      this.userService.resetUserData();
+      this.router.navigate(['/input']);
+    } catch (error) {
+      this.showToast('Error saving data', 'error');
+      
+    }
   }
 
   // Open Profile Picture Modal
