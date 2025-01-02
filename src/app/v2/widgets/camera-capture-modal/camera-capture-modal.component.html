@@ -1,3 +1,31 @@
-<p>
-  camera-capture-modal works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Capture Image</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Camera Preview Section (Placeholder for Camera Preview) -->
+  <div id="camera-preview-container" class="camera-preview-container">
+    <!-- This is where the camera preview will be displayed once logic is implemented -->
+    <p>Camera Preview Area</p>
+  </div>
+
+  <!-- Buttons Section -->
+  <div class="buttons-container">
+    <!-- Flip Camera Button -->
+    <ion-button fill="clear" (click)="flipCamera()">
+      <ion-icon name="repeat"></ion-icon>
+    </ion-button>
+
+    <!-- Capture Image Button -->
+    <ion-button fill="clear" (click)="captureImage()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-button>
+
+    <!-- Close Modal Button -->
+    <ion-button fill="clear" (click)="closeModal()">
+      <ion-icon name="close-circle"></ion-icon>
+    </ion-button>
+  </div>
+</ion-content>

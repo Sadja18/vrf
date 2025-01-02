@@ -1,0 +1,41 @@
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5); /* Transparent background */
+}
+
+.camera-preview-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px; /* Full width of the modal */
+  height: 440px; /* Adjust the height as needed */
+  background-color: black; /* Optional: better visibility for the preview */
+  margin: 0 auto; /* Centering the container */
+  overflow: hidden; /* Ensures the content doesn't overflow */
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem; /* Space between the buttons and the preview */
+  
+  ion-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px; /* Make buttons larger */
+    height: 80px; /* Adjust as needed */
+    border-radius: 50%; /* Optional: circular button appearance */
+  }
+
+  ion-icon {
+    font-size: 2.5rem; /* Larger icon size */
+  }
+}

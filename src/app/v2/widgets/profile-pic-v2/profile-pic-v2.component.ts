@@ -5,10 +5,13 @@ import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import {
   IonicModule,
   ModalController,
+  NavController,
   Platform,
   ToastController,
 } from '@ionic/angular';
 import { FullImageModalComponent } from '../full-image-modal/full-image-modal.component';
+import { CameraCaptureService } from 'src/app/services/camera-capture.service';
+import { CameraCaptureModalComponent } from '../camera-capture-modal/camera-capture-modal.component';
 
 @Component({
   selector: 'app-profile-pic-v2',
@@ -19,20 +22,65 @@ import { FullImageModalComponent } from '../full-image-modal/full-image-modal.co
 export class ProfilePicV2Component implements OnInit {
   imagePath: string | null = null;
   base64ImagePath: string = '';
-  imagePreview: string='';
+  imagePreview: string = '';
 
-  // For now, we'll use static handlers to log actions
-  captureImage() {
-    console.log('Capture Image clicked');
-    // In the real implementation, you would open the Camera Capture Modal here
+  ngOnInit() {
+    // Retrieve the image path from the service
+    this.imagePath = this.cameraCaptureService.getImagePath();
+
+    console.log("Image path from service ", this.cameraCaptureService.getImagePath());
   }
-
-  ngOnInit() {}
+  
 
   constructor(
     private platform: Platform,
     private modalController: ModalController,
+    private cameraCaptureService: CameraCaptureService,
+
   ) {}
+
+  // Open Camera Capture Modal to capture an image
+  async openCameraModal() {
+    // Navigate to the camera capture screen
+    
+    const modal = await this.modalController.create({
+      component: CameraCaptureModalComponent,
+    });
+
+    modal.onDidDismiss().then((data) => {
+      console.log('modal dismissed')
+      console.log(data)
+      console.log(data?.data);
+      console.log(data.data.filePath);
+      
+      if (data.data && data.data.filePath) {
+        // Received the file path from Camera Capture Modal
+        this.imagePath = data.data.filePath;
+        // Ensure that imagePath is not null before calling the function
+        if (this.imagePath) {
+          this.convertImagePathToPreview(this.imagePath);
+        }
+      }
+    });
+
+    return await modal.present();
+  }
+
+  // Convert image path to base64 or valid URI for preview
+  async convertImagePathToPreview(filePath: string) {
+    try {
+      // Read the file from the file system to get the base64 string
+      const file = await Filesystem.readFile({
+        path: filePath,
+        directory: Directory.Data,
+      });
+
+      // Convert file data to a base64 string for preview
+      this.imagePreview = 'data:image/jpeg;base64,' + file.data;
+    } catch (error) {
+      console.error('Error reading the image file:', error);
+    }
+  }
 
   // Open the full image modal
   async openFullImageModal() {
@@ -166,7 +214,7 @@ export class ProfilePicV2Component implements OnInit {
   async checkIfDirectoryExists(): Promise<boolean> {
     try {
       await Filesystem.readdir({
-        path: '',
+        path: 'Pictures',
         directory: Directory.External,
       });
       return true;
