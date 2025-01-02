@@ -30,6 +30,7 @@ export class CameraCaptureModalComponent implements OnInit {
       height: 400,
       x: 5, // Align to the left edge
       y: 80, // Align to the top edge
+      enableZoom: true,
     });
   }
 

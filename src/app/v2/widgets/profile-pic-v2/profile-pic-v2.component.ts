@@ -52,7 +52,7 @@ export class ProfilePicV2Component implements OnInit {
       console.log(data)
       console.log(data?.data);
       console.log(data.data.filePath);
-      
+
       if (data.data && data.data.filePath) {
         // Received the file path from Camera Capture Modal
         this.imagePath = data.data.filePath;
@@ -69,10 +69,16 @@ export class ProfilePicV2Component implements OnInit {
   // Convert image path to base64 or valid URI for preview
   async convertImagePathToPreview(filePath: string) {
     try {
+
+      // split the file path to get file name
+      const searchFilePath = `Pictures/${filePath.split("/").pop()}`
+
+      console.log('file Path ', filePath, " ",searchFilePath)
+
       // Read the file from the file system to get the base64 string
       const file = await Filesystem.readFile({
-        path: filePath,
-        directory: Directory.Data,
+        path: searchFilePath,
+        directory: Directory.External,
       });
 
       // Convert file data to a base64 string for preview
