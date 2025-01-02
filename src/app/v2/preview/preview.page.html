@@ -29,7 +29,7 @@
               <!-- For profilePic -->
               <img
                 *ngSwitchCase="'profilePic'"
-                src="{{ userData[field.key] }}"
+                src="{{ this.imagePreview }}"
                 alt="Profile Picture"
                 (click)="openProfileZoom()"
               />

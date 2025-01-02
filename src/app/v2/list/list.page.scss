@@ -1,0 +1,52 @@
+.content-wrapper-list-page {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.card-item-parent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.user-card-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: flex-start;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.user-data {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+  word-wrap: break-word;
+}
+
+.user-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.user-field strong {
+  font-weight: bold;
+}
+
+.profile-pic-preview {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+ion-card {
+  margin-bottom: 10px;
+  border-radius: 10px;
+}

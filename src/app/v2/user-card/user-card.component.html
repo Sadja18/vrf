@@ -1,43 +1,44 @@
-<!-- <div class="user-card">
-  <p><strong>First Name:</strong> {{ user.firstName }}</p>
-  <p><strong>Last Name:</strong> {{ user.lastName }}</p>
-  <p><strong>Mobile:</strong> {{ user.mobile }}</p>
-  <p><strong>Profile Pic: </strong> {{ typeof user.profilePic }}</p>
-</div> -->
-
-
 <div class="user-card">
   <ion-row class="user-details">
+    <!-- Profile Picture Column -->
     <ion-col size="auto" class="avatar-col">
       <img 
-      [src]="user.profilePic" 
-      alt="Profile Picture" 
-      class="profile-avatar" 
-      (click)="openProfileZoom()"
+        [src]="user.profilePic" 
+        alt="Profile Picture" 
+        class="profile-avatar" 
+        (click)="openProfileZoom()"
       />
     </ion-col>
-    <ion-col class="info-col"  (click)="openMap()">
-      <div class="name-row">
-        <ion-row><span>First Name:</span> {{ user.firstName | titlecase }}</ion-row>
-      </div>
-      <div class="name-row">
-        <ion-row><span>Last Name:</span> {{ user.lastName | titlecase }}</ion-row>
-      </div>
-      <div class="mobile-row">
-        <span>Mobile:</span> {{ user.mobile | titlecase }}
-      </div>
-      <div class="education-row">
-        <span>Education:</span> {{ user.education | titlecase }}
-      </div>
-      <div class="address-row">
-        <span>Address:</span> {{ user.address | titlecase }}
-      </div>
 
-      <div class="location-row">
-        <span>Latitude:</span> {{ user.location.lat }}
+    <!-- Text Data Column -->
+    <ion-col class="info-col">
+      <div class="field-row">
+        <span class="field-label">First Name:</span>
+        <span class="field-value">{{ user.firstName | titlecase }}</span>
       </div>
-      <div class="location-row">
-        <span>Longitude:</span> {{ user.location.lng }}
+      <div class="field-row">
+        <span class="field-label">Last Name:</span>
+        <span class="field-value">{{ user.lastName | titlecase }}</span>
+      </div>
+      <div class="field-row">
+        <span class="field-label">Mobile:</span>
+        <span class="field-value">{{ user.mobile | titlecase }}</span>
+      </div>
+      <div class="field-row">
+        <span class="field-label">Education:</span>
+        <span class="field-value">{{ user.education | titlecase }}</span>
+      </div>
+      <div class="field-row">
+        <span class="field-label">Address:</span>
+        <span class="field-value">{{ user.address | titlecase }}</span>
+      </div>
+      <div class="field-row">
+        <span class="field-label">Latitude:</span>
+        <span class="field-value">{{ user.location.lat | number: '1.0-5' }}</span>
+      </div>
+      <div class="field-row">
+        <span class="field-label">Longitude:</span>
+        <span class="field-value">{{ user.location.lng | number: '1.0-5' }}</span>
       </div>
     </ion-col>
   </ion-row>

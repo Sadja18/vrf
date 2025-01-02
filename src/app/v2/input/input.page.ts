@@ -7,7 +7,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { User } from 'src/app/models/user.interface';
 import { UserService } from 'src/app/services/user.service';
@@ -15,6 +15,7 @@ import { ValidationService } from 'src/app/services/validation.service';
 import { Geolocation } from '@capacitor/geolocation';
 import * as L from 'leaflet'; // Leaflet library for map rendering
 import { DatabaseService } from 'src/app/services/database.service';
+import { NavigationState } from 'src/app/models/navigation.interface';
 
 @Component({
   selector: 'app-input',
@@ -47,6 +48,7 @@ export class InputPage implements OnInit {
     private toastController: ToastController,
     private router: Router,
     private databaseService: DatabaseService,
+    private activatedRoute: ActivatedRoute,
   ) {
     this.userForm = this.fb.group({
       firstName: ['', [Validators.required, this.nameValidator.bind(this)]],
@@ -149,8 +151,8 @@ export class InputPage implements OnInit {
   dobValidator(control: AbstractControl): { [key: string]: string } | null {
     let dob = control.value;
 
-    if (dob.includes('T')){
-      dob= dob.split("T")[0];
+    if (dob?.includes('T')) {
+      dob = dob.split('T')[0];
     }
     const dobRegex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD format
     const date = new Date(dob);
@@ -195,14 +197,7 @@ export class InputPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    const storedUserData = this.userService.getUserData();
-    // console.log(storedUserData);
-    if (storedUserData) {
-      this.userForm.patchValue(storedUserData); // Populate the form with existing data
-      const location = storedUserData.location;
-      this.resetLocation(location);
-    }
-
+    
     this.initMap();
   }
 
@@ -296,30 +291,19 @@ export class InputPage implements OnInit {
     return `${maxLength - inputLength} characters remaining`;
   }
 
-  convertUserFormToUserData(): User {
-    this.user.firstName = this.userForm.get('firstName')?.value;
-    this.user.lastName = this.userForm.get('lastName')?.value;
-    this.user.dateOfBirth = this.userForm.get('firstName')?.value;
-    this.user.address = this.userForm.get('address')?.value;
-    this.user.mobile = this.userForm.get('mobile')?.value;
-    this.user.education = this.userForm.get('education')?.value;
-    this.user.gender = this.userForm.get('gender')?.value;
-    this.user.location.lat = this.userForm.get('location')?.get('lat')?.value;
-    this.user.location.lng = this.userForm.get('location')?.get('lng')?.value;
+  // convertUserFormToUserData(): User {
 
-    this.user.profilePic = this.userForm.get('profilePic')?.value;
+  //   console.log(
+  //     'updated user ',
+  //     this.user,
+  //     ' ',
+  //     this.userForm.get('location')?.get('lat')?.value,
+  //     ' ',
+  //     this.userForm.get('location')?.get('lng')?.value,
+  //   );
 
-    console.log(
-      'updated user ',
-      this.user,
-      ' ',
-      this.userForm.get('location')?.get('lat')?.value,
-      ' ',
-      this.userForm.get('location')?.get('lng')?.value,
-    );
-
-    return this.user;
-  }
+  //   return this.user;
+  // }
 
   // Helper method to get the error message based on the key
   getErrorMessage(errorKey: string): string {
@@ -337,6 +321,14 @@ export class InputPage implements OnInit {
     };
 
     return errorMessages[errorKey] || 'Invalid input' + ` ${errorKey}`;
+  }
+
+  // This method will be called whenever the profile picture is updated
+  onImageSelected(event: { imagePath: string; imagePreview: string }) {
+    this.userForm.get('profilePic')?.setValue(event.imagePath);
+    // If you need to store the preview path, you can do so as well
+    // console.log('Image path:', event.imagePath);
+    // console.log('Preview path:', event.imagePreview);
   }
 
   async onSubmit() {
@@ -376,9 +368,29 @@ export class InputPage implements OnInit {
     }
     this.showToast('All entries are valid to submit', 'success');
 
-    this.user = this.convertUserFormToUserData();
+    const user: User = {
+      firstName: this.userForm.get('firstName')?.value,
+      lastName: this.userForm.get('lastName')?.value,
+      dateOfBirth: this.userForm.get('dateOfBirth')?.value,
+      address: this.userForm.get('address')?.value,
+      mobile: this.userForm.get('mobile')?.value,
+      education: this.userForm.get('education')?.value,
+      gender: this.userForm.get('gender')?.value,
+      location: {
+        lat: this.userForm.get('location')?.get('lat')?.value,
+        lng: this.userForm.get('location')?.get('lng')?.value,
+      },
+      profilePic: this.userForm.get('profilePic')?.value,
+    };
 
-    this.userService.setUserData(this.user);
+    console.log('set users as user ');
+    console.log(user);
+
+    this.userService.setUserData(user);
+    // this.userForm.reset();
+    // this.userForm.get('profilePic')?.setValue('');
+    // this.resetMap();
+
     // Navigate to the preview screen
     this.router.navigate(['/preview']);
   }
@@ -396,8 +408,29 @@ export class InputPage implements OnInit {
   onReset() {
     this.userForm.reset();
     this.userForm.get('profilePic')?.setValue('');
+    this.userService.resetUserData();
     this.resetMap();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('ngonit')
+    const navigationState = this.activatedRoute.snapshot.data;
+
+    console.log("navigation state", navigationState?.['editForm']);
+
+    if (navigationState?.['editForm']) {
+      const storedUserData = this.userService.getUserData();
+      // console.log(storedUserData);
+      if (storedUserData) {
+        this.userForm.patchValue(storedUserData); // Populate the form with existing data
+        const location = storedUserData.location;
+        this.resetLocation(location);
+      }
+    }else{
+      console.log('normal form');
+      this.userForm.reset();
+      this.userForm?.get('dob')?.setValue("1970-03-28");
+      this.userService.resetUserData();
+    }
+  }
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Camera, CameraSource, CameraResultType } from '@capacitor/camera';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import {
@@ -10,7 +10,6 @@ import {
   ToastController,
 } from '@ionic/angular';
 import { FullImageModalComponent } from '../full-image-modal/full-image-modal.component';
-import { CameraCaptureService } from 'src/app/services/camera-capture.service';
 import { CameraCaptureModalComponent } from '../camera-capture-modal/camera-capture-modal.component';
 
 @Component({
@@ -20,36 +19,40 @@ import { CameraCaptureModalComponent } from '../camera-capture-modal/camera-capt
   imports: [CommonModule, IonicModule],
 })
 export class ProfilePicV2Component implements OnInit {
+
+  @Input() imageDataFromForm: {imagePath: string, imagePreview: string} = {imagePath:'', imagePreview:''};
+
+  @Output() imageSelected = new EventEmitter<{
+    imagePath: string;
+    imagePreview: string;
+  }>();
+
   imagePath: string | null = null;
   base64ImagePath: string = '';
   imagePreview: string = '';
 
   ngOnInit() {
-    // Retrieve the image path from the service
-    this.imagePath = this.cameraCaptureService.getImagePath();
-
-    console.log("Image path from service ", this.cameraCaptureService.getImagePath());
+    this.imagePath = this.imageDataFromForm.imagePath;
+    this.imagePreview = this.imageDataFromForm.imagePreview;
   }
-  
 
   constructor(
     private platform: Platform,
     private modalController: ModalController,
-    private cameraCaptureService: CameraCaptureService,
-
+    // private cameraCaptureService: CameraCaptureService,
   ) {}
 
   // Open Camera Capture Modal to capture an image
   async openCameraModal() {
     // Navigate to the camera capture screen
-    
+
     const modal = await this.modalController.create({
       component: CameraCaptureModalComponent,
     });
 
     modal.onDidDismiss().then((data) => {
-      console.log('modal dismissed')
-      console.log(data)
+      console.log('modal dismissed');
+      console.log(data);
       console.log(data?.data);
       console.log(data.data.filePath);
 
@@ -69,11 +72,10 @@ export class ProfilePicV2Component implements OnInit {
   // Convert image path to base64 or valid URI for preview
   async convertImagePathToPreview(filePath: string) {
     try {
-
       // split the file path to get file name
-      const searchFilePath = `Pictures/${filePath.split("/").pop()}`
+      const searchFilePath = `Pictures/${filePath.split('/').pop()}`;
 
-      console.log('file Path ', filePath, " ",searchFilePath)
+      console.log('file Path ', filePath, ' ', searchFilePath);
 
       // Read the file from the file system to get the base64 string
       const file = await Filesystem.readFile({
@@ -83,6 +85,9 @@ export class ProfilePicV2Component implements OnInit {
 
       // Convert file data to a base64 string for preview
       this.imagePreview = 'data:image/jpeg;base64,' + file.data;
+
+      this.imageSelected.emit({imagePath: filePath, imagePreview: this.imagePreview });
+
     } catch (error) {
       console.error('Error reading the image file:', error);
     }
@@ -196,6 +201,11 @@ export class ProfilePicV2Component implements OnInit {
 
       // Store the base64 image in a variable that will be used for the image preview
       this.imagePreview = base64Image;
+
+      this.imageSelected.emit({
+        imagePath: this.imagePath,
+        imagePreview: this.imagePreview,
+      });
     } catch (error: any) {
       if (
         typeof error == 'object' &&

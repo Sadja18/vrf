@@ -63,7 +63,7 @@
                 [preferWheel]="true"
                 [showDefaultButtons]="true"
                 [formatOptions]="{
-                date: { day: '2-digit', month: '2-digit', year: 'numeric' }
+                date: { day: '2-digit', month: 'short', year: 'numeric' }
                 }"
                 required
               >
@@ -78,29 +78,37 @@
           <ion-label class="gender-label">Gender</ion-label>
           <ion-radio-group formControlName="gender" class="gender-radio-group">
             <div class="gender-radio-item">
-              <ion-radio slot="start" value="Male">Male</ion-radio>
+              <ion-radio
+                slot="start"
+                value="Male"
+                labelPlacement="end"
+              >Male</ion-radio>
             </div>
             <div class="gender-radio-item">
-              <ion-radio slot="start" value="Female">Female</ion-radio>
+              <ion-radio slot="start" value="Female" labelPlacement="end"
+                >Female</ion-radio
+              >
             </div>
             <div class="gender-radio-item">
-              <ion-radio slot="start" value="Other">Other</ion-radio>
+              <ion-radio slot="start" value="Other" labelPlacement="end"
+                >Other</ion-radio
+              >
             </div>
           </ion-radio-group>
         </div>
 
         <!-- Education -->
         <div class="education-wrapper">
-          <ion-label class="education-label">Education</ion-label>
-          <ion-select formControlName="education">
-            <ion-select-option value="10th"
-              >High School</ion-select-option
-            >
+          <ion-select
+            formControlName="education"
+            label="Highest Education"
+            labelPlacement="floating"
+          >
+            <ion-select-option value="10th">High School</ion-select-option>
             <ion-select-option value="12th">12th</ion-select-option>
             <ion-select-option value="Bachelors">Bachelors</ion-select-option>
             <ion-select-option value="Masters">Masters</ion-select-option>
             <ion-select-option value="Others">Others</ion-select-option>
-
           </ion-select>
         </div>
 
@@ -123,7 +131,7 @@
 
         <!-- Done: Implement Image Capture/Picker using a separate new component which returns image path  -->
         <div class="profilePic-wrapper">
-          <app-profile-pic-v2></app-profile-pic-v2>
+          <app-profile-pic-v2 (imageSelected)="onImageSelected($event)"></app-profile-pic-v2>
         </div>
 
         <!-- Done: Location movement to be implemented -->

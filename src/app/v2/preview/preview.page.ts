@@ -32,7 +32,8 @@ export class PreviewPage implements OnInit {
   };
   fields: { label: string; key: keyof User }[] = [];
 
-  private debugMode: boolean = true;
+  private debugMode: boolean = false;
+  imagePreview: string = '';
 
   constructor(
     private userService: UserService,
@@ -40,13 +41,14 @@ export class PreviewPage implements OnInit {
     private databaseService: DatabaseService,
     private modalController: ModalController,
     private toastController: ToastController,
-    private imageProcessorService: ImageProcessorService,
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     if (!this.debugMode) {
       this.userData = this.userService.getUserData();
     }
+
+    await this.convertImagePathToPreview(this.userData.profilePic);
 
     this.fields = [
       { label: 'First Name', key: 'firstName' },
@@ -63,7 +65,7 @@ export class PreviewPage implements OnInit {
 
   onEdit(): void {
     // Navigate back to the user form to allow the user to edit
-    this.router.navigate(['/input']);
+    this.router.navigate(['/input'], { state: { editForm: true } });
   }
 
   onSave(): void {
@@ -76,14 +78,6 @@ export class PreviewPage implements OnInit {
     // Call adduser service
 
     console.log(this.userData.profilePic);
-
-    const savedFilePath =
-      await this.imageProcessorService.convertBase64AndSaveFile(
-        this.userData.profilePic,
-      );
-    console.log('Image saved at:', savedFilePath);
-
-    this.userData.profilePic = savedFilePath;
 
     try {
       this.databaseService.addUser(
@@ -99,10 +93,30 @@ export class PreviewPage implements OnInit {
       );
       this.showToast('Data saved successfully', 'success');
       this.userService.resetUserData();
-      this.router.navigate(['/input']);
+      await this.clearCacheFiles();
+      this.router.navigate(['/list']);
     } catch (error) {
       this.showToast('Error saving data', 'error');
-      
+    }
+  }
+
+  async convertImagePathToPreview(filePath: string) {
+    try {
+      // split the file path to get file name
+      const searchFilePath = `Pictures/${filePath.split('/').pop()}`;
+
+      console.log('file Path ', filePath, ' ', searchFilePath);
+
+      // Read the file from the file system to get the base64 string
+      const file = await Filesystem.readFile({
+        path: searchFilePath,
+        directory: Directory.External,
+      });
+
+      // Convert file data to a base64 string for preview
+      this.imagePreview = 'data:image/jpeg;base64,' + file.data;
+    } catch (error) {
+      console.error('Error reading the image file:', error);
     }
   }
 
@@ -110,7 +124,7 @@ export class PreviewPage implements OnInit {
   async openProfileZoom() {
     const modal = await this.modalController.create({
       component: ZoomModalComponent,
-      componentProps: { profilePic: this.userData.profilePic },
+      componentProps: { profilePic: this.imagePreview },
     });
     return await modal.present();
   }
@@ -134,14 +148,26 @@ export class PreviewPage implements OnInit {
     toast.present();
   }
 
-  onDelete(): void {
-    this.databaseService
-      .clearUsersTable()
-      .then((response) => {
-        console.log('response ', response);
-      })
-      .catch((error) => {
-        console.error('error ', error);
+  // Method to clear all files from Directory.Cache/
+  async clearCacheFiles(): Promise<void> {
+    try {
+      // Get the list of files in the cache directory
+      const files = await Filesystem.readdir({
+        directory: Directory.Cache,
+        path: '',
       });
+      console.log(files);
+
+      // Loop through and delete each file in the cache
+      for (const file of files.files) {
+        await Filesystem.deleteFile({
+          path: file.name,
+          directory: Directory.Cache,
+        });
+        console.log(`Deleted file: ${file}`);
+      }
+    } catch (error) {
+      console.error('Error clearing cache files:', error);
+    }
   }
 }

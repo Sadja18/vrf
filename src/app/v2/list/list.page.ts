@@ -36,65 +36,25 @@ export class ListPage implements OnInit {
     toast.present();
   }
 
-  /**
-   * Resolves a local path to a web-compatible URI.
-   * @param localPath The local path to resolve.
-   * @returns A promise that resolves with the web URI.
-   */
-  private async resolveWebPath(localPath: string): Promise<string> {
+  async convertImagePathToPreview(filePath: string) : Promise<string | void> {
     try {
-      const fileName = localPath.split('DATA/')[1]; // Extract path after DATA/
-      const webPath = await Filesystem.getUri({
-        path: `${fileName}`,
-        directory: Directory.Data,
+      // split the file path to get file name
+      const searchFilePath = `Pictures/${filePath.split('/').pop()}`;
+
+      console.log('file Path ', filePath, ' ', searchFilePath);
+
+      // Read the file from the file system to get the base64 string
+      const file = await Filesystem.readFile({
+        path: searchFilePath,
+        directory: Directory.External,
       });
 
-      console.log(webPath);
+      // Convert file data to a base64 string for preview
+      return 'data:image/jpeg;base64,' + file.data;
 
-      const path = webPath.uri.replace('file://', '');
 
-      // console.log(webPath.uri);
-      // console.log(webPath);
-      // console.log(webPath.uri);
-
-      try {
-        const fileData = await Filesystem.readFile({
-          path: path,
-          directory: Directory.Data, // Make sure you specify the correct directory
-        });
-  
-        console.log('f');
-  
-        console.log(fileData);
-      } catch (error) {
-        console.error('f ', error)
-      }
-
-      return webPath.uri;
-
-      // const base64Image = await this.getBase64ImageFromFile(fileData.data);
-
-      // return base64Image; // Return the web-compatible URI
     } catch (error) {
-      console.error('Error resolving web path:', error);
-      return ''; // Return an empty string if there's an error
-    }
-  }
-
-  async getBase64ImageFromFile(uri: string): Promise<string> {
-    // Strip the 'file://' part from the uri, as we only need the relative path.
-    const path = uri.replace('file://', '');
-
-    try {
-      const fileData = await Filesystem.readFile({
-        path,
-        directory: Directory.Data, // Make sure you specify the correct directory
-      });
-
-      return `data:image/png;base64,${fileData.data}`; // You may need to adjust the MIME type based on your file format (jpg, png, etc.)
-    } catch (error) {
-      console.error('Error reading file: ', error);
-      return '';
+      console.error('Error reading the image file:', error);
     }
   }
 
@@ -118,7 +78,7 @@ export class ListPage implements OnInit {
           // Resolve the profilePic path to a web-compatible URI
           const profilePicUri =
             record['profilePic'] && typeof record['profilePic'] === 'string'
-              ? await this.resolveWebPath(record['profilePic'])
+              ? await this.convertImagePathToPreview(record['profilePic'])
               : null;
 
           return {
