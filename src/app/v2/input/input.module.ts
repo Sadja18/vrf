@@ -9,6 +9,7 @@ import { InputPageRoutingModule } from './input-routing.module';
 import { InputPage } from './input.page';
 import { ImageComponent } from '../widgets/image/image.component';
 import { DateFormatPipe } from 'src/app/date-format.pipe';
+import { ProfilePicV2Component } from '../widgets/profile-pic-v2/profile-pic-v2.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { DateFormatPipe } from 'src/app/date-format.pipe';
     InputPageRoutingModule,
     ReactiveFormsModule,
     ImageComponent,
-    DateFormatPipe
+    DateFormatPipe, ProfilePicV2Component
   ],
   declarations: [InputPage]
 })

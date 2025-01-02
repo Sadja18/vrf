@@ -1,11 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   Camera,
-  CameraDirection,
   CameraResultType,
   CameraSource,
 } from '@capacitor/camera';
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { ModalController, IonicModule, ToastController } from '@ionic/angular';
 import { ImagePreviewModalComponent } from '../image-preview-modal/image-preview-modal.component';
 import { CommonModule } from '@angular/common';
@@ -46,49 +44,7 @@ export class ImageComponent implements OnInit {
     });
     toast.present();
   }
-
-  // async takePicture() {
-  //   try {
-  //     // Start the camera with the front-facing direction
-  //     await CameraPreview.start({
-  //       position: 'front', // or 'rear'
-  //       parent: 'cameraPreview', // Container for the camera
-  //       className: 'camera-preview', // Optional for styling
-        
-  //     });
-
-  //     // Capture the photo
-  //     const photo = await CameraPreview.capture({
-  //       quality: 90,
-  //       height: 300,
-  //       width: 300,
-  //     });
-
-  //     // Convert captured photo to Base64
-  //     if (photo?.value) {
-  //       this.previewPic = `data:image/jpeg;base64,${photo.value}`;
-  //       this.imagePath.emit(this.previewPic); // Emit Base64 string
-  //     }
-
-  //     // Stop the camera after the photo is taken
-  //     await CameraPreview.stop();
-  //     // const photo = await Camera.getPhoto({
-  //     //   quality: 90,
-  //     //   resultType: CameraResultType.Base64, // Return the URI of the image
-  //     //   source: CameraSource.Prompt,
-  //     //   allowEditing: false,
-  //     //   saveToGallery: false,
-  //     // });
-
-  //     // // Save the photo with a new name based on the timestamp
-  //     // this.previewPic = `data:image/jpeg;base64,${photo.base64String}`; // Construct the Base64 URL
-  //     // // console.log('previewPic ', this.previewPic);
-  //     // this.imagePath.emit(this.previewPic); // Emit the Base64 string
-  //   } catch (error) {
-  //     console.error('Error capturing photo: ', error);
-  //   }
-  // }
-
+  
   async openCameraModal() {
     const modal = await this.modalController.create({
       component: CameraModalComponent, // The modal component for the camera preview

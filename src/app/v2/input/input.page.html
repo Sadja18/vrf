@@ -123,10 +123,7 @@
 
         <!-- Done: Implement Image Capture/Picker using a separate new component which returns image path  -->
         <div class="profilePic-wrapper">
-          <app-image
-            (imagePath)="userForm.get('profilePic')?.setValue($event)"
-            [initialBase64]="userForm.get('profilePic')?.value"
-          ></app-image>
+          <app-profile-pic-v2></app-profile-pic-v2>
         </div>
 
         <!-- Done: Location movement to be implemented -->

@@ -1,0 +1,18 @@
+<ion-row>
+  <!-- Col Left -->
+  <ion-col size="6">
+    <ion-button expand="full" (click)="captureImage()">Capture Image</ion-button>
+    <ion-button expand="full" (click)="pickFromGallery()">Gallery</ion-button>
+  </ion-col>
+
+  <!-- Col Right -->
+  <ion-col size="6">
+    <!-- Image Preview -->
+    <div *ngIf="imagePath" class="image-preview" (click)="openFullImageModal()">
+      <img [src]="imagePreview" alt="Preview" class="preview-img">
+    </div>
+    <div *ngIf="!imagePath">
+      <p>No image selected or captured</p>
+    </div>
+  </ion-col>
+</ion-row>
